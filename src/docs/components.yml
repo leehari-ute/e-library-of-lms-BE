@@ -12,12 +12,36 @@ components:
           type: string
         role:
           type: string
-          enum: [user, admin]
+          enum: [admin, teacher, leadership, student]
       example:
         id: 5ebac534954b54139806c112
         email: fake@example.com
         name: fake name
         role: user
+    
+    Subject:
+      type: object
+      properties:
+        id:
+          type: string
+        subCode:
+          type: string
+        subName:
+          type: string
+        teacher:
+          type: string
+        status:
+          type: number
+          enum: [0, 1, 2]
+        image:
+          type: string
+      example:
+        id: 5ebac534954b54139806c112
+        subCode: 2020_A
+        subName: Thương mại điện tử
+        teacher: Hoa Hoa
+        status: 0
+        image: ''
 
     Token:
       type: object

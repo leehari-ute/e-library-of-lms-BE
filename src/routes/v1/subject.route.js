@@ -1,38 +1,38 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
-const userValidation = require('../../validations/user.validation');
-const userController = require('../../controllers/user.controller');
+const subjectValidation = require('../../validations/subject.validation');
+const subjectController = require('../../controllers/subject.controller');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageUsers'), validate(userValidation.createUser), userController.createUser)
-  .get(auth('getUsers'), validate(userValidation.getUsers), userController.getUsers);
+  .post(auth('manageSubjects'), validate(subjectValidation.createSubject), subjectController.createSubject)
+  .get(auth('getSubjects'), validate(subjectValidation.getSubjects), subjectController.getSubjects);
 
 router
-  .route('/:userId')
-  .get(auth('getUsers'), validate(userValidation.getUser), userController.getUser)
-  .patch(auth('manageUsers'), validate(userValidation.updateUser), userController.updateUser)
-  .delete(auth('manageUsers'), validate(userValidation.deleteUser), userController.deleteUser);
+  .route('/:subjectId')
+  .get(auth('getSubjects'), validate(subjectValidation.getSubject), subjectController.getSubject)
+  .patch(auth('manageSubjects'), validate(subjectValidation.updateSubject), subjectController.updateSubject)
+  .delete(auth('manageSubjects'), validate(subjectValidation.deleteSubject), subjectController.deleteSubject);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Users
- *   description: User management and retrieval
+ *   name: Subjects
+ *   description: Subject management and retrieval
  */
 
 /**
  * @swagger
- * /users:
+ * /subjects:
  *   post:
- *     summary: Create a user
- *     description: Only admins can create other users.
- *     tags: [Users]
+ *     summary: Create a subject
+ *     description: Only admins, leadership can create other subjects.
+ *     tags: [Subjects]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -42,61 +42,45 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
- *               - email
- *               - password
- *               - role
+ *               - subCode
+ *               - subName
+ *               - teacher
  *             properties:
- *               name:
+ *               subCode:
  *                 type: string
- *               email:
- *                 type: string
- *                 format: email
  *                 description: must be unique
- *               password:
+ *               subName:
  *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
- *               role:
- *                  type: string
- *                  enum: [teacher, admin, leadership, student]
+ *               teacher:
+ *                 type: string
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
- *               role: user
+ *               subCode: 2020_TMDT
+ *               subName: Thương mại điện tử
+ *               teacher: Hoa Hoa
  *     responses:
  *       "201":
  *         description: Created
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
+ *                $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all users
- *     description: Only admins can retrieve all users.
- *     tags: [Users]
+ *     summary: Get all subjects
+ *     description: Only admins can retrieve all subjects.
+ *     tags: [Subjects]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: name
+ *         name: subCode
  *         schema:
  *           type: string
- *         description: User name
- *       - in: query
- *         name: role
- *         schema:
- *           type: string
- *         description: User role
+ *         description: Subject Code
  *       - in: query
  *         name: sortBy
  *         schema:
@@ -108,7 +92,7 @@ module.exports = router;
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of users
+ *         description: Maximum number of subjects
  *       - in: query
  *         name: page
  *         schema:
@@ -127,7 +111,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/User'
+ *                     $ref: '#/components/schemas/Subject'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -148,11 +132,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /users/{id}:
+ * /subjects/{id}:
  *   get:
- *     summary: Get a user
- *     description: Logged in users can fetch only their own user information. Only admins can fetch other users.
- *     tags: [Users]
+ *     summary: Get a subject
+ *     description: Logged in subjects can fetch only their own subject information. Only admins can fetch other subjects.
+ *     tags: [Subjects]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -161,14 +145,14 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Subject id
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
+ *                $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -177,9 +161,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a user
- *     description: Logged in users can only update their own information. Only admins can update other users.
- *     tags: [Users]
+ *     summary: Update a subject
+ *     description: Logged in subjects can only update their own information. Only admins can update other subjects.
+ *     tags: [Subjects]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -188,7 +172,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Subject id
  *     requestBody:
  *       required: true
  *       content:
@@ -196,30 +180,34 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               subCode:
  *                 type: string
- *               email:
- *                 type: string
- *                 format: email
  *                 description: must be unique
- *               password:
+ *               subName:
  *                 type: string
- *                 format: password
- *                 minLength: 8
- *                 description: At least one number and one letter
+ *               teacher:
+ *                 type: string
+ *               status:
+ *                 type: number
+ *                 enum: [0, 1, 2]
+ *               file:
+ *                 type: number
+ *               image:
+ *                 type: string
  *             example:
- *               name: fake name
- *               email: fake@example.com
- *               password: password1
+ *               subCode: 2020_A
+ *               subName: Thương mại điện tử
+ *               teacher: Hoa Hoa
+ *               status: 1
+ *               file: 10
+ *               image: image
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/User'
- *       "400":
- *         $ref: '#/components/responses/DuplicateEmail'
+ *                $ref: '#/components/schemas/Subject'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -228,9 +216,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a user
- *     description: Logged in users can delete only themselves. Only admins can delete other users.
- *     tags: [Users]
+ *     summary: Delete a subject
+ *     description: Logged in subjects can delete only themselves. Only admins can delete other subjects.
+ *     tags: [Subjects]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -239,7 +227,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: User id
+ *         description: Subject id
  *     responses:
  *       "200":
  *         description: No content
