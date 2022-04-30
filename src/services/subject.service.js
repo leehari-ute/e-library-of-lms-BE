@@ -68,7 +68,7 @@ const updateSubjectById = async (subjectId, updateBody) => {
 const deleteSubjectById = async (subjectId) => {
   const subject = await getSubjectById(subjectId);
   if (!subject) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Subejct not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
   await subject.remove();
   return subject;

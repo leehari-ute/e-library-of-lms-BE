@@ -31,8 +31,12 @@ const subjectSchema = mongoose.Schema(
       type: String,
       default: '',
     },
-    createdAt: String,
-    updatedAt: String,
+    createdAt: {
+      type: Date,
+    },
+    updatedAt: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
