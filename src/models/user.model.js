@@ -44,6 +44,21 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    gender: {
+      type: String,
+    },
+    avt: {
+      type: String,
+    },
+    userName: {
+      type: String,
+    },
+    phone: {
+      type: String,
+    },
+    address: {
+      type: String,
+    },
   },
   {
     timestamps: true,

@@ -44,6 +44,15 @@ const getSubjectBySubcode = async (subCode) => {
 };
 
 /**
+ * Get subject by subName
+ * @param {string} subCode
+ * @returns {Promise<Subject>}
+ */
+const getSubjectBySubname = async (subName) => {
+  return Subject.findOne({ subName });
+};
+
+/**
  * Update subject by id
  * @param {ObjectId} subjectId
  * @param {Object} updateBody
@@ -79,6 +88,7 @@ module.exports = {
   querySubjects,
   getSubjectById,
   getSubjectBySubcode,
+  getSubjectBySubname,
   updateSubjectById,
   deleteSubjectById,
 };

@@ -1,38 +1,38 @@
 const express = require('express');
 const auth = require('../../middlewares/auth');
 const validate = require('../../middlewares/validate');
-const subjectValidation = require('../../validations/subject.validation');
-const subjectController = require('../../controllers/subject.controller');
+const fileValidation = require('../../validations/file.validation');
+const fileController = require('../../controllers/file.controller');
 
 const router = express.Router();
 
 router
   .route('/')
-  .post(auth('manageSubjects'), validate(subjectValidation.createSubject), subjectController.createSubject)
-  .get(auth('getSubjects'), validate(subjectValidation.getSubjects), subjectController.getSubjects);
+  .post(auth('manageFiles'), validate(fileValidation.createFile), fileController.createFile)
+  .get(auth('getFiles'), validate(fileValidation.getFiles), fileController.getFiles);
 
 router
-  .route('/:subjectId')
-  .get(auth('getSubjects'), validate(subjectValidation.getSubject), subjectController.getSubject)
-  .patch(auth('manageSubjects'), validate(subjectValidation.updateSubject), subjectController.updateSubject)
-  .delete(auth('manageSubjects'), validate(subjectValidation.deleteSubject), subjectController.deleteSubject);
+  .route('/:fileId')
+  .get(auth('getFiles'), validate(fileValidation.getFile), fileController.getFile)
+  .patch(auth('manageFiles'), validate(fileValidation.updateFile), fileController.updateFile)
+  .delete(auth('manageFiles'), validate(fileValidation.deleteFile), fileController.deleteFile);
 
 module.exports = router;
 
 /**
  * @swagger
  * tags:
- *   name: Subjects
- *   description: Subject management and retrieval
+ *   name: Files
+ *   description: File management and retrieval
  */
 
 /**
  * @swagger
- * /subjects:
+ * /files:
  *   post:
- *     summary: Create a subject
- *     description: Only admins, leadership can create other subjects.
- *     tags: [Subjects]
+ *     summary: Create a File
+ *     description: Only admins, leadership can create other Files.
+ *     tags: [Files]
  *     security:
  *       - bearerAuth: []
  *     requestBody:
@@ -42,20 +42,19 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - subCode
- *               - subName
+ *               - fileName
+ *               - fileRole
  *               - teacher
  *             properties:
- *               subCode:
+ *               fileName:
  *                 type: string
- *                 description: must be unique
- *               subName:
- *                 type: string
+ *               fileRole:
+ *                 type: number
  *               teacher:
  *                 type: string
  *             example:
- *               subCode: 2020_TMDT
- *               subName: Thương mại điện tử
+ *               fileName: 2020_6A
+ *               fileRole: 0
  *               teacher: Hoa Hoa
  *     responses:
  *       "201":
@@ -63,29 +62,29 @@ module.exports = router;
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Subject'
+ *                $ref: '#/components/schemas/File'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  *
  *   get:
- *     summary: Get all subjects
- *     description: Only admins can retrieve all subjects.
- *     tags: [Subjects]
+ *     summary: Get all Files
+ *     description: Only admins can retrieve all Files.
+ *     tags: [Files]
  *     security:
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
- *         name: subCode
+ *         name: fileName
  *         schema:
  *           type: string
- *         description: Subject Code
+ *         description: File Name
  *       - in: query
- *         name: subName
+ *         name: status
  *         schema:
  *           type: string
- *         description: Subject Name
+ *         description: Status
  *       - in: query
  *         name: sortBy
  *         schema:
@@ -97,7 +96,7 @@ module.exports = router;
  *           type: integer
  *           minimum: 1
  *         default: 10
- *         description: Maximum number of subjects
+ *         description: Maximum number of Files
  *       - in: query
  *         name: page
  *         schema:
@@ -116,7 +115,7 @@ module.exports = router;
  *                 results:
  *                   type: array
  *                   items:
- *                     $ref: '#/components/schemas/Subject'
+ *                     $ref: '#/components/schemas/File'
  *                 page:
  *                   type: integer
  *                   example: 1
@@ -137,11 +136,11 @@ module.exports = router;
 
 /**
  * @swagger
- * /subjects/{id}:
+ * /files/{id}:
  *   get:
- *     summary: Get a subject
- *     description: Logged in subjects can fetch only their own subject information. Only admins can fetch other subjects.
- *     tags: [Subjects]
+ *     summary: Get a File
+ *     description: Logged in Files can fetch only their own File information. Only admins can fetch other Files.
+ *     tags: [Files]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -150,14 +149,14 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: Subject id
+ *         description: File id
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Subject'
+ *                $ref: '#/components/schemas/File'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -166,9 +165,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   patch:
- *     summary: Update a subject
- *     description: Logged in subjects can only update their own information. Only admins can update other subjects.
- *     tags: [Subjects]
+ *     summary: Update a File
+ *     description: Logged in Files can only update their own information. Only admins can update other Files.
+ *     tags: [Files]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -177,7 +176,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: Subject id
+ *         description: File id
  *     requestBody:
  *       required: true
  *       content:
@@ -185,34 +184,29 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               subCode:
+ *               fileName:
  *                 type: string
  *                 description: must be unique
- *               subName:
- *                 type: string
+ *               fileRole:
+ *                 type: number
+ *                 enum: [0, 1]
  *               teacher:
  *                 type: string
  *               status:
  *                 type: number
  *                 enum: [0, 1, 2]
- *               file:
- *                 type: number
- *               image:
- *                 type: string
  *             example:
- *               subCode: 2020_A
- *               subName: Thương mại điện tử
+ *               fileName: 2020_6A
+ *               fileRole: 1
  *               teacher: Hoa Hoa
  *               status: 1
- *               file: 10
- *               image: image
  *     responses:
  *       "200":
  *         description: OK
  *         content:
  *           application/json:
  *             schema:
- *                $ref: '#/components/schemas/Subject'
+ *                $ref: '#/components/schemas/File'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
@@ -221,9 +215,9 @@ module.exports = router;
  *         $ref: '#/components/responses/NotFound'
  *
  *   delete:
- *     summary: Delete a subject
- *     description: Logged in subjects can delete only themselves. Only admins can delete other subjects.
- *     tags: [Subjects]
+ *     summary: Delete a File
+ *     description: Logged in Files can delete only themselves. Only admins can delete other Files.
+ *     tags: [Files]
  *     security:
  *       - bearerAuth: []
  *     parameters:
@@ -232,7 +226,7 @@ module.exports = router;
  *         required: true
  *         schema:
  *           type: string
- *         description: Subject id
+ *         description: File id
  *     responses:
  *       "200":
  *         description: No content

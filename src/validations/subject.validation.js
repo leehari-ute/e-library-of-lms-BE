@@ -17,6 +17,8 @@ const getSubjects = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
+    subCode: Joi.string(),
+    subName: Joi.string(),
   }),
 };
 
