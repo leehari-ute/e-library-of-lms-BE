@@ -7,7 +7,10 @@ const topicSchema = mongoose.Schema(
       type: String,
       require: true,
     },
-    classId: Array,
+    classId: {
+      type: Array,
+      default: [],
+    },
     title: {
       type: String,
       require: true,
@@ -15,7 +18,10 @@ const topicSchema = mongoose.Schema(
     description: {
       type: String,
     },
-    lesson: [{ _id: mongoose.Schema.Types.ObjectId, title: String, video: String, file: String }],
+    lesson: {
+      type: Array,
+      default: [],
+    },
     image: {
       type: String,
     },
@@ -25,10 +31,10 @@ const topicSchema = mongoose.Schema(
     content: {
       type: String,
     },
-    noti: [
-      { _id: mongoose.Schema.Types.ObjectId, title: String, time: String, type: String, content: String },
-      { timestamps: true },
-    ],
+    QA: {
+      type: Array,
+      default: [],
+    },
     createdAt: {
       type: Date,
     },
