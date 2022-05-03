@@ -17,6 +17,7 @@ const topicSchema = mongoose.Schema(
     },
     description: {
       type: String,
+      default: '',
     },
     lesson: {
       type: Array,
@@ -24,22 +25,23 @@ const topicSchema = mongoose.Schema(
     },
     image: {
       type: String,
+      default: '',
     },
     source: {
-      type: String,
+      type: Array,
+      default: [],
     },
     content: {
       type: String,
+      default: '',
     },
     QA: {
       type: Array,
       default: [],
     },
-    createdAt: {
-      type: Date,
-    },
-    updatedAt: {
-      type: Date,
+    noti: {
+      type: Array,
+      default: [],
     },
   },
   {

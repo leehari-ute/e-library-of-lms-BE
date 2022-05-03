@@ -31,7 +31,7 @@ const querySubjects = async (filter, options) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectById = async (id) => {
-  return Subject.findById(id);
+  return Subject.findById(id).populate('Topic');
 };
 
 /**
@@ -40,7 +40,7 @@ const getSubjectById = async (id) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubcode = async (subCode) => {
-  return Subject.findOne({ subCode });
+  return Subject.findOne({ subCode }).populate('Topic');
 };
 
 /**
@@ -49,7 +49,7 @@ const getSubjectBySubcode = async (subCode) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
-  return Subject.findOne({ subName });
+  return Subject.findOne({ subName }).populate('Topic');
 };
 
 /**

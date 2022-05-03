@@ -32,6 +32,10 @@ const subjectSchema = mongoose.Schema(
       default: '',
     },
     topic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
+    description: {
+      type: String,
+      default: '',
+    },
     createdAt: {
       type: Date,
     },
