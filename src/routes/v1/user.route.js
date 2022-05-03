@@ -196,7 +196,7 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               userName:
  *                 type: string
  *               email:
  *                 type: string
@@ -208,7 +208,7 @@ module.exports = router;
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               name: fake name
+ *               userName: fake name
  *               email: fake@example.com
  *               password: password1
  *     responses:

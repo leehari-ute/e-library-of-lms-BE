@@ -37,11 +37,11 @@ module.exports = router;
  *           schema:
  *             type: object
  *             required:
- *               - name
+ *               - userName
  *               - email
  *               - password
  *             properties:
- *               name:
+ *               userName:
  *                 type: string
  *               email:
  *                 type: string
@@ -53,7 +53,7 @@ module.exports = router;
  *                 minLength: 8
  *                 description: At least one number and one letter
  *             example:
- *               name: fake name
+ *               userName: fake name
  *               email: fake@example.com
  *               password: password1
  *     responses:
@@ -212,7 +212,7 @@ module.exports = router;
  *     tags: [Auth]
  *     parameters:
  *       - in: query
- *         name: token
+ *         userName: token
  *         required: true
  *         schema:
  *           type: string
