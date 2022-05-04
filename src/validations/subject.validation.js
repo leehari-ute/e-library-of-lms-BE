@@ -9,6 +9,7 @@ const createSubject = {
     file: Joi.number(),
     status: Joi.number(),
     image: Joi.string(),
+    topic: Joi.array(),
   }),
 };
 
@@ -17,6 +18,7 @@ const getSubjects = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
+    populate: Joi.string(),
     subCode: Joi.string(),
     subName: Joi.string(),
   }),
@@ -40,6 +42,7 @@ const updateSubject = {
       status: Joi.number(),
       image: Joi.string(),
       file: Joi.number(),
+      topic: Joi.array(),
     })
     .min(1),
 };

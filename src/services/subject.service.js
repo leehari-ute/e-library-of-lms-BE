@@ -15,6 +15,7 @@ const createSubject = async (subjectBody) => {
  * Query for subjects
  * @param {Object} filter - Mongo filter
  * @param {Object} options - Query options
+ * @param {string} [options.populate] - Populate data fields. Hierarchy of fields should be separated by (.). Multiple populating criteria should be separated by commas (,)
  * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
  * @param {number} [options.limit] - Maximum number of results per page (default = 10)
  * @param {number} [options.page] - Current page (default = 1)
@@ -22,6 +23,7 @@ const createSubject = async (subjectBody) => {
  */
 const querySubjects = async (filter, options) => {
   const subjects = await Subject.paginate(filter, options);
+
   return subjects;
 };
 
@@ -31,7 +33,7 @@ const querySubjects = async (filter, options) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectById = async (id) => {
-  return Subject.findById(id).populate('Topic');
+  return Subject.findById(id).populate('topic');
 };
 
 /**
@@ -40,7 +42,7 @@ const getSubjectById = async (id) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubcode = async (subCode) => {
-  return Subject.findOne({ subCode }).populate('Topic');
+  return Subject.findOne({ subCode }).populate('topic');
 };
 
 /**
@@ -49,7 +51,7 @@ const getSubjectBySubcode = async (subCode) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
-  return Subject.findOne({ subName }).populate('Topic');
+  return Subject.findOne({ subName }).populate('topic');
 };
 
 /**
