@@ -3,9 +3,11 @@ const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
 const { bankService } = require('../services');
+const { subjectService } = require('../services');
 
 const createExam = catchAsync(async (req, res) => {
   const exam = await bankService.createExam(req.body);
+  await subjectService.updateSubjectById(req.body.subject, { bank: exam._id });
   res.status(httpStatus.CREATED).send(exam);
 });
 

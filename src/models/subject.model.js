@@ -32,6 +32,7 @@ const subjectSchema = mongoose.Schema(
       default: '',
     },
     topic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
+    bank: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bank' }],
     description: {
       type: String,
       default: '',

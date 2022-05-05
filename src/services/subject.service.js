@@ -65,8 +65,12 @@ const updateSubjectById = async (subjectId, updateBody) => {
   if (!subject) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
+  if (updateBody.bank) {
+    subject.bank.push(updateBody.bank);
+  } else {
+    Object.assign(subject, updateBody);
+  }
 
-  Object.assign(subject, updateBody);
   await subject.save();
   return subject;
 };

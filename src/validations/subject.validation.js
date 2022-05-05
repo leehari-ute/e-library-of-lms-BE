@@ -10,6 +10,7 @@ const createSubject = {
     status: Joi.number(),
     image: Joi.string(),
     topic: Joi.array(),
+    bank: Joi.array(),
   }),
 };
 
@@ -43,6 +44,7 @@ const updateSubject = {
       image: Joi.string(),
       file: Joi.number(),
       topic: Joi.array(),
+      bank: Joi.array(),
     })
     .min(1),
 };

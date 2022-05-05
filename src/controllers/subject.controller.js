@@ -12,7 +12,7 @@ const createSubject = catchAsync(async (req, res) => {
 const getSubjects = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['subName', 'subCode']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
-  options.populate = 'topic';
+  options.populate = 'topic, bank';
   const result = await subjectService.querySubjects(filter, options);
   res.send(result);
 });
