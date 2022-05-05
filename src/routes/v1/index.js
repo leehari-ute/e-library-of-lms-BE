@@ -3,6 +3,7 @@ const authRoute = require('./auth.route');
 const userRoute = require('./user.route');
 const subjectRoute = require('./subject.route');
 const fileRoute = require('./file.route');
+const bankRoute = require('./bank.route');
 const topicRoute = require('./topic.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const docsRoute = require('./docs.route');
@@ -34,6 +35,10 @@ const defaultRoutes = [
   {
     path: '/topics',
     route: topicRoute,
+  },
+  {
+    path: '/banks',
+    route: bankRoute,
   },
 ];
 

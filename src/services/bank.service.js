@@ -1,0 +1,94 @@
+const httpStatus = require('http-status');
+const { Bank } = require('../models');
+const ApiError = require('../utils/ApiError');
+
+/**
+ * Create a bank
+ * @param {Object} bankBody
+ * @returns {Promise<Bank>}
+ */
+const createExam = async (bankBody) => {
+  return Bank.create(bankBody);
+};
+
+/**
+ * Query for Banks
+ * @param {Object} filter - Mongo filter
+ * @param {Object} options - Query options
+ * @param {string} [options.sortBy] - Sort option in the format: sortField:(desc|asc)
+ * @param {number} [options.limit] - Maximum number of results per page (default = 10)
+ * @param {number} [options.page] - Current page (default = 1)
+ * @returns {Promise<QueryResult>}
+ */
+const queryExams = async (filter, options) => {
+  const banks = await Bank.paginate(filter, options);
+  return banks;
+};
+
+/**
+ * Get Exam by id
+ * @param {ObjectId} id
+ * @returns {Promise<Bank>}
+ */
+const getExamById = async (id) => {
+  return Bank.findById(id);
+};
+
+/**
+ * Get Exam by status
+ * @param {string} status
+ * @returns {Promise<Bank>}
+ */
+const getExamByStatus = async (status) => {
+  return Bank.findOne({ status });
+};
+
+/**
+ * Get Exam by Subject
+ * @param {string} subject
+ * @returns {Promise<Bank>}
+ */
+const getExamBySubject = async (subject) => {
+  return Bank.findOne({ subject });
+};
+
+/**
+ * Update Exam by id
+ * @param {ObjectId} examId
+ * @param {Object} updateBody
+ * @returns {Promise<Bank>}
+ */
+const updateExamById = async (examId, updateBody) => {
+  const exam = await getExamById(examId);
+  if (!exam) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Exam not found');
+  }
+
+  Object.assign(exam, updateBody);
+  await exam.save();
+  return exam;
+};
+
+/**
+ * Delete subejct by id
+ * @param {ObjectId} examId
+ * @returns {Promise<Bank>}
+ */
+const deleteExamById = async (examId) => {
+  const exam = await getExamById(examId);
+  if (!exam) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'exam not found');
+  }
+  await exam.remove();
+  return exam;
+};
+
+module.exports = {
+  createExam,
+  queryExams,
+  getExamById,
+  getExamByStatus,
+  getExamBySubject,
+  updateExamById,
+  deleteExamById,
+};

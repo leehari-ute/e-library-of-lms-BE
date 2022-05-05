@@ -3,3 +3,4 @@ module.exports.userController = require('./user.controller');
 module.exports.subjectController = require('./subject.controller');
 module.exports.fileController = require('./file.controller');
 module.exports.topicController = require('./topic.controller');
+module.exports.bankController = require('./bank.controller');
