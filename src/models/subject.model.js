@@ -13,11 +13,7 @@ const subjectSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    teacher: {
-      type: String,
-      required: true,
-      trim: true,
-    },
+    teacher: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     file: {
       type: Number,
       required: false,

@@ -7,6 +7,7 @@ const createExam = {
     examName: Joi.string().required(),
     examType: Joi.number().required(),
     subject: Joi.string().required(),
+    user: Joi.string().required(),
     status: Joi.number(),
   }),
 };
@@ -18,6 +19,7 @@ const getExams = {
     page: Joi.number().integer(),
     status: Joi.number(),
     subject: Joi.string(),
+    user: Joi.string(),
   }),
 };
 
@@ -37,6 +39,7 @@ const updateExam = {
       examName: Joi.string(),
       examType: Joi.number(),
       subject: Joi.string(),
+      user: Joi.string(),
       status: Joi.number(),
     })
     .min(1),
@@ -45,6 +48,9 @@ const updateExam = {
 const deleteExam = {
   params: Joi.object().keys({
     examId: Joi.string().custom(objectId),
+  }),
+  body: Joi.object().keys({
+    subjectId: Joi.string(),
   }),
 };
 

@@ -43,6 +43,9 @@ const deleteTopic = {
   params: Joi.object().keys({
     topicId: Joi.string().custom(objectId),
   }),
+  body: Joi.object().keys({
+    subjectId: Joi.string().required(),
+  }),
 };
 
 module.exports = {

@@ -221,6 +221,17 @@ module.exports = router;
  *         schema:
  *           type: string
  *         description: Topic id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               subjectId:
+ *                 type: string
+ *             example:
+ *               subjectId: drh4fg56cj163
  *     responses:
  *       "200":
  *         description: No content

@@ -7,14 +7,14 @@ const { subjectService } = require('../services');
 
 const createExam = catchAsync(async (req, res) => {
   const exam = await bankService.createExam(req.body);
-  await subjectService.updateSubjectById(req.body.subject, { bank: exam._id });
+  await subjectService.updateSubjectBankById(req.body.subject, { bank: exam._id });
   res.status(httpStatus.CREATED).send(exam);
 });
 
 const getExams = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['fileName', 'status']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
-  options.populate = 'subject';
+  options.populate = 'subject, user';
   const result = await bankService.queryExams(filter, options);
   res.send(result);
 });
@@ -33,8 +33,9 @@ const updateExam = catchAsync(async (req, res) => {
 });
 
 const deleteExam = catchAsync(async (req, res) => {
-  await bankService.deleteExamById(req.params.examId);
-  res.status(httpStatus.NO_CONTENT).send();
+  const exam = await bankService.deleteExamById(req.params.examId);
+  await subjectService.deleteSubjectBankById(req.body.subjectId, { bank: exam._id });
+  res.status(httpStatus.NO_CONTENT).send(exam);
 });
 
 module.exports = {

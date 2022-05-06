@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
 const { Topic } = require('../models');
+
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -31,7 +32,7 @@ const queryTopics = async (filter, options) => {
  * @returns {Promise<Topic>}
  */
 const getTopicById = async (id) => {
-  return Topic.findById(id);
+  return Topic.findById(id).populate('subjectId');
 };
 
 /**
@@ -40,7 +41,7 @@ const getTopicById = async (id) => {
  * @returns {Promise<Topic>}
  */
 const getTopicByTopicId = async (topicId) => {
-  return Topic.findOne({ topicId });
+  return Topic.findOne({ topicId }).populate('subjectId');
 };
 
 /**

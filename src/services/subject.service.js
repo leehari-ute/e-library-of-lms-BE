@@ -33,7 +33,7 @@ const querySubjects = async (filter, options) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectById = async (id) => {
-  return Subject.findById(id).populate('topic');
+  return Subject.findById(id).populate('topic').populate('user').populate('bank');
 };
 
 /**
@@ -42,7 +42,7 @@ const getSubjectById = async (id) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubcode = async (subCode) => {
-  return Subject.findOne({ subCode }).populate('topic');
+  return Subject.findOne({ subCode }).populate('topic').populate('user').populate('bank');
 };
 
 /**
@@ -51,7 +51,7 @@ const getSubjectBySubcode = async (subCode) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
-  return Subject.findOne({ subName }).populate('topic');
+  return Subject.findOne({ subName }).populate('topic').populate('user').populate('bank');
 };
 
 /**
@@ -65,12 +65,71 @@ const updateSubjectById = async (subjectId, updateBody) => {
   if (!subject) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
-  if (updateBody.bank) {
-    subject.bank.push(updateBody.bank);
-  } else {
-    Object.assign(subject, updateBody);
-  }
+  Object.assign(subject, updateBody);
+  await subject.save();
+  return subject;
+};
 
+/**
+ * Update subject bank by id
+ * @param {ObjectId} subjectId
+ * @param {Object} updateBody
+ * @returns {Promise<Subject>}
+ */
+const updateSubjectBankById = async (subjectId, updateBody) => {
+  const subject = await getSubjectById(subjectId);
+  if (!subject) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
+  }
+  subject.bank.push(updateBody.bank);
+  await subject.save();
+  return subject;
+};
+
+/**
+ * Update subject topic by id
+ * @param {ObjectId} subjectId
+ * @param {Object} updateBody
+ * @returns {Promise<Subject>}
+ */
+const updateSubjectTopicById = async (subjectId, updateBody) => {
+  const subject = await getSubjectById(subjectId);
+  if (!subject) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
+  }
+  subject.topic.push(updateBody.topic);
+  await subject.save();
+  return subject;
+};
+
+/**
+ * Delete subject topic by id
+ * @param {ObjectId} subjectId
+ * @param {Object} updateBody
+ * @returns {Promise<Subject>}
+ */
+const deleteSubjectTopicById = async (subjectId, updateBody) => {
+  const subject = await getSubjectById(subjectId);
+  if (!subject) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
+  }
+  subject.topic = subject.topic.filter((item) => item !== updateBody.topic);
+  await subject.save();
+  return subject;
+};
+
+/**
+ * Delete subject bank by id
+ * @param {ObjectId} subjectId
+ * @param {Object} updateBody
+ * @returns {Promise<Subject>}
+ */
+const deleteSubjectBankById = async (subjectId, updateBody) => {
+  const subject = await getSubjectById(subjectId);
+  if (!subject) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
+  }
+  subject.bank = subject.bank.filter((item) => item !== updateBody.bank);
   await subject.save();
   return subject;
 };
@@ -96,5 +155,9 @@ module.exports = {
   getSubjectBySubcode,
   getSubjectBySubname,
   updateSubjectById,
+  updateSubjectBankById,
+  updateSubjectTopicById,
+  deleteSubjectTopicById,
+  deleteSubjectBankById,
   deleteSubjectById,
 };

@@ -31,7 +31,7 @@ const queryExams = async (filter, options) => {
  * @returns {Promise<Bank>}
  */
 const getExamById = async (id) => {
-  return Bank.findById(id);
+  return Bank.findById(id).populate('user').populate('subject');
 };
 
 /**
@@ -40,7 +40,7 @@ const getExamById = async (id) => {
  * @returns {Promise<Bank>}
  */
 const getExamByStatus = async (status) => {
-  return Bank.findOne({ status });
+  return Bank.findOne({ status }).populate('user').populate('subject');
 };
 
 /**
@@ -49,7 +49,7 @@ const getExamByStatus = async (status) => {
  * @returns {Promise<Bank>}
  */
 const getExamBySubject = async (subject) => {
-  return Bank.findOne({ subject });
+  return Bank.findOne({ subject }).populate('user').populate('subject');
 };
 
 /**

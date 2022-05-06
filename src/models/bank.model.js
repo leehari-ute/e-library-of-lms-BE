@@ -16,7 +16,19 @@ const bankSchema = mongoose.Schema(
       required: true,
       ref: 'Subject',
     },
+    subjectGroup: {
+      type: String,
+    },
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
+    },
     examType: {
+      type: Number,
+      required: true,
+    },
+    time: {
       type: Number,
       required: true,
     },

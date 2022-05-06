@@ -3,10 +3,7 @@ const { toJSON, paginate } = require('./plugins');
 
 const topicSchema = mongoose.Schema(
   {
-    subjectId: {
-      type: String,
-      require: true,
-    },
+    subjectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     classId: {
       type: Array,
       default: [],
