@@ -7,6 +7,7 @@ const createExam = {
     examName: Joi.string().required(),
     examType: Joi.number().required(),
     subject: Joi.string().required(),
+    time: Joi.number().required(),
     user: Joi.string().required(),
     status: Joi.number(),
   }),
@@ -39,6 +40,7 @@ const updateExam = {
       examName: Joi.string(),
       examType: Joi.number(),
       subject: Joi.string(),
+      time: Joi.number(),
       user: Joi.string(),
       status: Joi.number(),
     })

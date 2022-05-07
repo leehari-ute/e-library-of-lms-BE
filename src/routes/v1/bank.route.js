@@ -47,6 +47,7 @@ module.exports = router;
  *               - subject
  *               - examType
  *               - user
+ *               - time
  *             properties:
  *               fileType:
  *                 type: number
@@ -58,12 +59,15 @@ module.exports = router;
  *                 type: number
  *               user:
  *                 type: string
+ *               time:
+ *                 type: number
  *             example:
  *               fileType: 0
  *               examName: Kiểm tra chủ đề 01.ppt
  *               subject: 123465789123abc
  *               examType: 0
  *               user: s35zg453df1h32
+ *               time: 15
  *     responses:
  *       "201":
  *         description: Created

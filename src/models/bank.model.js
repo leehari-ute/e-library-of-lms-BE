@@ -31,6 +31,7 @@ const bankSchema = mongoose.Schema(
     time: {
       type: Number,
       required: true,
+      default: 15,
     },
     status: {
       type: Number,
