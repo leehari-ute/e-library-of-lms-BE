@@ -33,7 +33,7 @@ const querySubjects = async (filter, options) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectById = async (id) => {
-  return Subject.findById(id).populate('topic').populate('user').populate('bank');
+  return Subject.findById(id).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -42,7 +42,7 @@ const getSubjectById = async (id) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubcode = async (subCode) => {
-  return Subject.findOne({ subCode }).populate('topic').populate('user').populate('bank');
+  return Subject.findOne({ subCode }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -51,7 +51,7 @@ const getSubjectBySubcode = async (subCode) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
-  return Subject.findOne({ subName }).populate('topic').populate('user').populate('bank');
+  return Subject.findOne({ subName }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**

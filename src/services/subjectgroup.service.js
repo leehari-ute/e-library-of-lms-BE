@@ -52,7 +52,7 @@ const updateSubjectGroupById = async (subjectgroupId, updateBody) => {
 };
 
 /**
- * Delete subejct by id
+ * Delete subjectGroup by id
  * @param {ObjectId} subjectgroupId
  * @returns {Promise<SubjectGroup>}
  */

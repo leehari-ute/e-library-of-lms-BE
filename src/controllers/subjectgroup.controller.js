@@ -18,20 +18,20 @@ const getSubjectgroups = catchAsync(async (req, res) => {
 });
 
 const getSubjectgroup = catchAsync(async (req, res) => {
-  const subjectgroup = await subjectgroupService.getExamById(req.params.subjectgroupId);
+  const subjectgroup = await subjectgroupService.getSubjectGroupById(req.params.subjectgroupId);
   if (!subjectgroup) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Exam not found');
+    throw new ApiError(httpStatus.NOT_FOUND, 'SubjectGroup not found');
   }
   res.send(subjectgroup);
 });
 
 const updateSubjectgroup = catchAsync(async (req, res) => {
-  const subjectgroup = await subjectgroupService.updateExamById(req.params.subjectgroupId, req.body);
+  const subjectgroup = await subjectgroupService.updateSubjectGroupById(req.params.subjectgroupId, req.body);
   res.send(subjectgroup);
 });
 
 const deleteSubjectgroup = catchAsync(async (req, res) => {
-  const subjectgroup = await subjectgroupService.deleteExamById(req.params.subjectgroupId);
+  const subjectgroup = await subjectgroupService.deleteSubjectGroupById(req.params.subjectgroupId);
   res.status(httpStatus.NO_CONTENT).send(subjectgroup);
 });
 
