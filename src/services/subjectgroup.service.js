@@ -31,7 +31,7 @@ const querySubjectGroups = async (filter, options) => {
  * @returns {Promise<SubjectGroup>}
  */
 const getSubjectGroupById = async (id) => {
-  return SubjectGroup.findById(id);
+  return SubjectGroup.findById(id).populate('subject').populate('bank');
 };
 
 /**
@@ -47,6 +47,22 @@ const updateSubjectGroupById = async (subjectgroupId, updateBody) => {
   }
 
   Object.assign(subjectgroup, updateBody);
+  await subjectgroup.save();
+  return subjectgroup;
+};
+
+/**
+ * Update subject by subjectgroup id
+ * @param {ObjectId} subjectgroupId
+ * @param {Object} updateBody
+ * @returns {Promise<Subject>}
+ */
+const updateSubjectGroupSubjectById = async (subjectgroupId, updateBody) => {
+  const subjectgroup = await getSubjectGroupById(subjectgroupId);
+  if (!subjectgroup) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Subjectgroup not found');
+  }
+  subjectgroup.subject.push(updateBody.subject);
   await subjectgroup.save();
   return subjectgroup;
 };
@@ -70,5 +86,6 @@ module.exports = {
   querySubjectGroups,
   getSubjectGroupById,
   updateSubjectGroupById,
+  updateSubjectGroupSubjectById,
   deleteSubjectGroupById,
 };

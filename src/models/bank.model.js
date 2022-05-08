@@ -24,6 +24,12 @@ const bankSchema = mongoose.Schema(
       required: true,
       ref: 'User',
     },
+    question: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Question',
+      },
+    ],
     examType: {
       type: Number,
       required: true,

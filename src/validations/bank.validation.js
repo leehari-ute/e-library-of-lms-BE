@@ -10,6 +10,7 @@ const createExam = {
     time: Joi.number().required(),
     user: Joi.string().required(),
     status: Joi.number(),
+    question: Joi.string(),
   }),
 };
 
@@ -43,6 +44,7 @@ const updateExam = {
       time: Joi.number(),
       user: Joi.string(),
       status: Joi.number(),
+      question: Joi.string(),
     })
     .min(1),
 };

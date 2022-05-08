@@ -5,6 +5,7 @@ const createSubject = {
   body: Joi.object().keys({
     subCode: Joi.string().required(),
     subName: Joi.string().required(),
+    subGroup: Joi.string().required(),
     teacher: Joi.string().required(),
     file: Joi.number(),
     status: Joi.number(),
@@ -39,6 +40,7 @@ const updateSubject = {
     .keys({
       subCode: Joi.string(),
       subName: Joi.string(),
+      subGroup: Joi.string(),
       teacher: Joi.string(),
       status: Joi.number(),
       image: Joi.string(),

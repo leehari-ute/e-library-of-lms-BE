@@ -5,6 +5,7 @@ const subjectRoute = require('./subject.route');
 const fileRoute = require('./file.route');
 const bankRoute = require('./bank.route');
 const topicRoute = require('./topic.route');
+const questionRoute = require('./question.route');
 const subjectgroupRoute = require('./subjectgroup.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const docsRoute = require('./docs.route');
@@ -44,6 +45,10 @@ const defaultRoutes = [
   {
     path: '/subjectgroups',
     route: subjectgroupRoute,
+  },
+  {
+    path: '/questions',
+    route: questionRoute,
   },
 ];
 

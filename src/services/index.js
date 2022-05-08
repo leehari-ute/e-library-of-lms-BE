@@ -6,3 +6,5 @@ module.exports.subjectService = require('./subject.service');
 module.exports.fileService = require('./file.service');
 module.exports.topicService = require('./topic.service');
 module.exports.bankService = require('./bank.service');
+module.exports.subjectgroupService = require('./subjectgroup.service');
+module.exports.questionService = require('./question.service');

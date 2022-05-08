@@ -5,7 +5,7 @@ const catchAsync = require('../utils/catchAsync');
 const { subjectgroupService } = require('../services');
 
 const createSubjectgroup = catchAsync(async (req, res) => {
-  const subjectgroup = await subjectgroupService.createExam(req.body);
+  const subjectgroup = await subjectgroupService.createSubjectGroup(req.body);
   res.status(httpStatus.CREATED).send(subjectgroup);
 });
 
@@ -13,7 +13,7 @@ const getSubjectgroups = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['fileName', 'status']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'subject, bank';
-  const result = await subjectgroupService.queryExams(filter, options);
+  const result = await subjectgroupService.querySubjectGroups(filter, options);
   res.send(result);
 });
 

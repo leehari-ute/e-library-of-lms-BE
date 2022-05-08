@@ -13,6 +13,7 @@ const subjectSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
+    subGroup: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'SubjectGroup' },
     teacher: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     file: {
       type: Number,
