@@ -39,7 +39,7 @@ const updateUser = {
       address: Joi.string(),
       gender: Joi.number(),
       avt: Joi.string(),
-      recentSubject: Joi.array(),
+      recentSubject: Joi.string(),
     })
     .min(1),
 };
