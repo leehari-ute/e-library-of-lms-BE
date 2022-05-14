@@ -5,6 +5,7 @@ const createQuestion = {
   body: Joi.object().keys({
     quesCode: Joi.string().required(),
     quesName: Joi.string().required(),
+    quesType: Joi.number().required(),
     answers: Joi.array().required(),
     correct: Joi.array().required(),
     level: Joi.number().required(),
@@ -39,6 +40,7 @@ const updateQuestion = {
     .keys({
       quesCode: Joi.string(),
       quesName: Joi.string(),
+      quesType: Joi.number(),
       answers: Joi.array(),
       correct: Joi.array(),
       level: Joi.number(),
