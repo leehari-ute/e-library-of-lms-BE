@@ -47,6 +47,22 @@ const getUserByEmail = async (email) => {
 };
 
 /**
+ * Update user recentSubject by id
+ * @param {ObjectId} userId
+ * @param {Object} updateBody
+ * @returns {Promise<User>}
+ */
+const updateUserRecentSubjectById = async (userId, updateBody) => {
+  const user = await getUserById(userId);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'user not found');
+  }
+  user.recentSubject = updateBody.recentSubjectId;
+  await user.save();
+  return user;
+};
+
+/**
  * Update user by id
  * @param {ObjectId} userId
  * @param {Object} updateBody
@@ -60,8 +76,9 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
-  if (updateBody.recentSubject) {
-    user.recentSubject.unshift(updateBody.recentSubject);
+  if (updateBody.recentSubjectId) {
+    user.recentSubject = updateBody.recentSubjectId;
+    Object.assign(user, updateBody);
   } else {
     Object.assign(user, updateBody);
   }
@@ -89,5 +106,6 @@ module.exports = {
   getUserById,
   getUserByEmail,
   updateUserById,
+  updateUserRecentSubjectById,
   deleteUserById,
 };
