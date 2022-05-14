@@ -39,6 +39,7 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    recentSubject: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' }],
     gender: {
       type: Number,
     },
