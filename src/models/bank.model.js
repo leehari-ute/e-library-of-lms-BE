@@ -17,7 +17,9 @@ const bankSchema = mongoose.Schema(
       ref: 'Subject',
     },
     subjectGroup: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'SubjectGroup',
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,

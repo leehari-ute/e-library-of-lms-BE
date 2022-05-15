@@ -88,6 +88,16 @@ module.exports = router;
  *       - bearerAuth: []
  *     parameters:
  *       - in: query
+ *         name: user
+ *         schema:
+ *           type: string
+ *         description: userId
+ *       - in: query
+ *         name: subjectGroup
+ *         schema:
+ *           type: string
+ *         description: subjectGroup ID
+ *       - in: query
  *         name: subject
  *         schema:
  *           type: string

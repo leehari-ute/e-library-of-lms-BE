@@ -82,6 +82,16 @@ module.exports = router;
  *           type: string
  *         description: Subject Code
  *       - in: query
+ *         name: subGroup
+ *         schema:
+ *           type: string
+ *         description: Subject group
+ *       - in: query
+ *         name: teacher
+ *         schema:
+ *           type: string
+ *         description: teacher id
+ *       - in: query
  *         name: subName
  *         schema:
  *           type: string

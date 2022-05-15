@@ -12,7 +12,7 @@ const createExam = catchAsync(async (req, res) => {
 });
 
 const getExams = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['fileName', 'status']);
+  const filter = pick(req.query, ['user', 'status', 'subject', 'subjectGroup']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'subject, user, question';
   const result = await bankService.queryExams(filter, options);

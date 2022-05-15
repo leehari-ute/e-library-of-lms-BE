@@ -21,7 +21,8 @@ const getQuestions = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
-    subject: Joi.number(),
+    subject: Joi.string(),
+    level: Joi.number(),
     subjectgroup: Joi.string(),
   }),
 };
@@ -46,7 +47,7 @@ const updateQuestion = {
       level: Joi.number(),
       subjectgroup: Joi.string(),
       subject: Joi.string(),
-      bank: Joi.array().required(),
+      bank: Joi.array(),
     })
     .min(1),
 };

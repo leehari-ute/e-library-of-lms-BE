@@ -23,6 +23,8 @@ const getSubjects = {
     populate: Joi.string(),
     subCode: Joi.string(),
     subName: Joi.string(),
+    subGroup: Joi.string(),
+    teacher: Joi.string(),
   }),
 };
 

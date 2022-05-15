@@ -22,6 +22,7 @@ const getExams = {
     status: Joi.number(),
     subject: Joi.string(),
     user: Joi.string(),
+    subjectGroup: Joi.string(),
   }),
 };
 

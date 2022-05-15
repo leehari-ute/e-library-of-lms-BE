@@ -46,12 +46,30 @@ const getSubjectBySubcode = async (subCode) => {
 };
 
 /**
+ * Get subject by subGroup
+ * @param {string} subGroup
+ * @returns {Promise<Subject>}
+ */
+const getSubjectBySubGroup = async (subGroup) => {
+  return Subject.findOne({ subGroup }).populate('topic').populate('teacher').populate('bank');
+};
+
+/**
  * Get subject by subName
  * @param {string} subCode
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
   return Subject.findOne({ subName }).populate('topic').populate('teacher').populate('bank');
+};
+
+/**
+ * Get subject by teacher
+ * @param {string} teacher
+ * @returns {Promise<Subject>}
+ */
+const getSubjectByTeacher = async (teacher) => {
+  return Subject.findOne({ teacher }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -159,5 +177,7 @@ module.exports = {
   updateSubjectTopicById,
   deleteSubjectTopicById,
   deleteSubjectBankById,
+  getSubjectBySubGroup,
+  getSubjectByTeacher,
   deleteSubjectById,
 };

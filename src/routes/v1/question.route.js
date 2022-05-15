@@ -101,6 +101,11 @@ module.exports = router;
  *           type: string
  *         description: subjectId
  *       - in: query
+ *         name: level
+ *         schema:
+ *           type: number
+ *         description: level
+ *       - in: query
  *         name: subjectgroup
  *         schema:
  *           type: string

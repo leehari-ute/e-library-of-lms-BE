@@ -44,6 +44,15 @@ const getQuestionBySubjectgroup = async (subjectgroup) => {
 };
 
 /**
+ * Get Question by level
+ * @param {string} level
+ * @returns {Promise<Question>}
+ */
+const getQuestionByLevel = async (level) => {
+  return Question.findOne({ level }).populate('user');
+};
+
+/**
  * Get Question by QuestionName
  * @param {string} subject
  * @returns {Promise<Question>}
@@ -90,5 +99,6 @@ module.exports = {
   getQuestionBySubject,
   getQuestionBySubjectgroup,
   updateQuestionById,
+  getQuestionByLevel,
   deleteQuestionById,
 };

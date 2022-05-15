@@ -7,12 +7,12 @@ const { subjectgroupService } = require('../services');
 
 const createSubject = catchAsync(async (req, res) => {
   const subject = await subjectService.createSubject(req.body);
-  await subjectgroupService.updateSubjectGroupSubjectById(req.body.subjectgroup, { subject: subject._id });
+  await subjectgroupService.updateSubjectGroupSubjectById(req.body.subGroup, { subject: subject._id });
   res.status(httpStatus.CREATED).send(subject);
 });
 
 const getSubjects = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['subName', 'subCode']);
+  const filter = pick(req.query, ['subName', 'subCode', 'teacher', 'subGroup']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'topic, bank, teacher';
   const result = await subjectService.querySubjects(filter, options);

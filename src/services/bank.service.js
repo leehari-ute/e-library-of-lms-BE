@@ -35,6 +35,24 @@ const getExamById = async (id) => {
 };
 
 /**
+ * Get Exam by user
+ * @param {string} user
+ * @returns {Promise<Bank>}
+ */
+const getExamByUser = async (user) => {
+  return Bank.findOne({ user }).populate('user').populate('subject').populate('question');
+};
+
+/**
+ * Get Exam by subjectGroup
+ * @param {string} subjectGroup
+ * @returns {Promise<Bank>}
+ */
+const getExamBySubjectGroup = async (subjectGroup) => {
+  return Bank.findOne({ subjectGroup }).populate('user').populate('subject').populate('question');
+};
+
+/**
  * Get Exam by status
  * @param {string} status
  * @returns {Promise<Bank>}
@@ -105,7 +123,9 @@ module.exports = {
   getExamById,
   getExamByStatus,
   getExamBySubject,
+  getExamByUser,
   updateExamById,
   updateExamQuestionById,
+  getExamBySubjectGroup,
   deleteExamById,
 };
