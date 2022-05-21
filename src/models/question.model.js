@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
+const { nanoid } = require('nanoid');
+
 const { toJSON, paginate } = require('./plugins');
 
 const questionSchema = mongoose.Schema(
   {
     quesCode: {
       type: String,
-      required: true,
       trim: true,
+      default: nanoid(),
     },
     quesName: {
       type: String,
@@ -23,7 +25,7 @@ const questionSchema = mongoose.Schema(
     },
     level: {
       type: Number,
-      required: true,
+      default: 0,
     },
     quesType: { type: Number, required: true },
     subGroup: { type: mongoose.Schema.Types.ObjectId, ref: 'SubjectGroup' },
