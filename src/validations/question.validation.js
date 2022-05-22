@@ -3,12 +3,12 @@ const { objectId } = require('./custom.validation');
 
 const createQuestion = {
   body: Joi.object().keys({
-    quesCode: Joi.string().required(),
+    quesCode: Joi.string(),
     quesName: Joi.string().required(),
     quesType: Joi.number().required(),
     answers: Joi.array().required(),
     correct: Joi.array().required(),
-    level: Joi.number().required(),
+    level: Joi.number(),
     subjectgroup: Joi.string().required(),
     subject: Joi.string().required(),
     user: Joi.string().required(),
