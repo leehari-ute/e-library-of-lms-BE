@@ -1,5 +1,5 @@
 const allRoles = {
-  student: ['getSubjects', 'getTopics'],
+  student: ['getSubjects', 'getTopics', 'getClasses'],
   teacher: [
     'getSubjects',
     'manageSubjects',
@@ -9,6 +9,7 @@ const allRoles = {
     'manageTopics',
     'getBanks',
     'manageBanks',
+    'getClasses',
   ],
   leadership: [
     'getUsers',
@@ -21,6 +22,8 @@ const allRoles = {
     'manageTopics',
     'getBanks',
     'manageBanks',
+    'manageClasses',
+    'getClasses',
   ],
   admin: [
     'getUsers',
@@ -33,6 +36,8 @@ const allRoles = {
     'manageTopics',
     'getBanks',
     'manageBanks',
+    'manageClasses',
+    'getClasses',
   ],
 };
 

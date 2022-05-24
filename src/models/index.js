@@ -6,3 +6,4 @@ module.exports.Topic = require('./topic.model');
 module.exports.Bank = require('./bank.model');
 module.exports.SubjectGroup = require('./subjectgroup.model');
 module.exports.Question = require('./question.model');
+module.exports.Classes = require('./classes.model');

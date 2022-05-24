@@ -8,3 +8,4 @@ module.exports.topicService = require('./topic.service');
 module.exports.bankService = require('./bank.service');
 module.exports.subjectgroupService = require('./subjectgroup.service');
 module.exports.questionService = require('./question.service');
+module.exports.classesService = require('./classes.service');
