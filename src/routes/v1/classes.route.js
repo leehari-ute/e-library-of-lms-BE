@@ -151,8 +151,8 @@ module.exports = router;
  * @swagger
  * /classes/{id}:
  *   get:
- *     summary: Get a File
- *     description: Logged in Classes can fetch only their own File information. Only admins can fetch other Classes.
+ *     summary: Get a Class
+ *     description: Logged in Classes can fetch only their own Class information. Only admins can fetch other Classes.
  *     tags: [Classes]
  *     security:
  *       - bearerAuth: []
