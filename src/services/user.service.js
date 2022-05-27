@@ -107,8 +107,7 @@ const updateUserByUserCode = async (userCode, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
   if (updateBody.classes) {
-    user.classes = user.classes.push(updateBody.classes);
-    Object.assign(user, updateBody);
+    user.classes.push(updateBody.classes);
   } else {
     Object.assign(user, updateBody);
   }
