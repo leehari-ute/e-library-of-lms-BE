@@ -38,6 +38,15 @@ const getUserById = async (id) => {
 };
 
 /**
+ * Get user by userCode
+ * @param {ObjectId} userCode
+ * @returns {Promise<User>}
+ */
+const getUserByUserCode = async (userCode) => {
+  return User.findOne({ userCode }).populate('recentSubject');
+};
+
+/**
  * Get user by email
  * @param {string} email
  * @returns {Promise<User>}
@@ -87,6 +96,27 @@ const updateUserById = async (userId, updateBody) => {
 };
 
 /**
+ * Update user by userCode
+ * @param {ObjectId} userCode
+ * @param {Object} updateBody
+ * @returns {Promise<User>}
+ */
+const updateUserByUserCode = async (userCode, updateBody) => {
+  const user = await getUserByUserCode(userCode);
+  if (!user) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
+  }
+  if (updateBody.classes) {
+    user.classes = user.classes.push(updateBody.classes);
+    Object.assign(user, updateBody);
+  } else {
+    Object.assign(user, updateBody);
+  }
+  await user.save();
+  return user;
+};
+
+/**
  * Delete user by id
  * @param {ObjectId} userId
  * @returns {Promise<User>}
@@ -104,8 +134,10 @@ module.exports = {
   createUser,
   queryUsers,
   getUserById,
+  getUserByUserCode,
   getUserByEmail,
   updateUserById,
+  updateUserByUserCode,
   updateUserRecentSubjectById,
   deleteUserById,
 };

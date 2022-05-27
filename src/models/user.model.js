@@ -6,6 +6,9 @@ const { roles } = require('../config/roles');
 
 const userSchema = mongoose.Schema(
   {
+    userCode: {
+      type: String,
+    },
     email: {
       type: String,
       required: true,
@@ -56,6 +59,7 @@ const userSchema = mongoose.Schema(
     address: {
       type: String,
     },
+    classes: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Classes' }],
   },
   {
     timestamps: true,

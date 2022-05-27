@@ -15,7 +15,7 @@ const classesSchema = mongoose.Schema(
     },
     subject: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' },
     teacher: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-    student: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' }],
+    student: [{ type: String, required: true }],
   },
   {
     timestamps: true,

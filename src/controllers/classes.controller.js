@@ -2,17 +2,22 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { classesService } = require('../services');
+const { classesService, userService } = require('../services');
 
 const createClass = catchAsync(async (req, res) => {
   const classes = await classesService.createClass(req.body);
+  if (req.body.student) {
+    req.body.student.forEach(async (it) => {
+      await userService.updateUserByUserCode(it, { classes: classes._id });
+    });
+  }
   res.status(httpStatus.CREATED).send(classes);
 });
 
 const getClasses = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['teacher', 'subject']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
-  options.populate = 'teacher, subject, student';
+  options.populate = 'teacher, subject';
   const result = await classesService.queryClasses(filter, options);
   res.send(result);
 });
