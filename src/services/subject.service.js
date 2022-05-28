@@ -33,7 +33,7 @@ const querySubjects = async (filter, options) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectById = async (id) => {
-  return Subject.findById(id).populate('topic').populate('teacher').populate('bank');
+  return Subject.findById(id).populate('topic').populate('teacher').populate('bank').populate('classes');
 };
 
 /**
@@ -42,7 +42,7 @@ const getSubjectById = async (id) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubcode = async (subCode) => {
-  return Subject.findOne({ subCode }).populate('topic').populate('teacher').populate('bank');
+  return Subject.findOne({ subCode }).populate('topic').populate('teacher').populate('bank').populate('classes');
 };
 
 /**
@@ -51,7 +51,7 @@ const getSubjectBySubcode = async (subCode) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubGroup = async (subGroup) => {
-  return Subject.findOne({ subGroup }).populate('topic').populate('teacher').populate('bank');
+  return Subject.findOne({ subGroup }).populate('topic').populate('teacher').populate('bank').populate('classes');
 };
 
 /**
@@ -60,7 +60,7 @@ const getSubjectBySubGroup = async (subGroup) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
-  return Subject.findOne({ subName }).populate('topic').populate('teacher').populate('bank');
+  return Subject.findOne({ subName }).populate('topic').populate('teacher').populate('bank').populate('classes');
 };
 
 /**
@@ -69,7 +69,7 @@ const getSubjectBySubname = async (subName) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectByTeacher = async (teacher) => {
-  return Subject.findOne({ teacher }).populate('topic').populate('teacher').populate('bank');
+  return Subject.findOne({ teacher }).populate('topic').populate('teacher').populate('bank').populate('classes');
 };
 
 /**
@@ -83,7 +83,12 @@ const updateSubjectById = async (subjectId, updateBody) => {
   if (!subject) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
-  Object.assign(subject, updateBody);
+  if (updateBody.classes) {
+    subject.classes.push(updateBody.classes);
+  } else {
+    Object.assign(subject, updateBody);
+  }
+
   await subject.save();
   return subject;
 };

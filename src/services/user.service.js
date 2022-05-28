@@ -34,7 +34,7 @@ const queryUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  return User.findById(id).populate('recentSubject');
+  return User.findById(id).populate('recentSubject').populate('classes');
 };
 
 /**
@@ -43,7 +43,7 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByUserCode = async (userCode) => {
-  return User.findOne({ userCode }).populate('recentSubject');
+  return User.findOne({ userCode }).populate('recentSubject').populate('classes');
 };
 
 /**
@@ -52,7 +52,7 @@ const getUserByUserCode = async (userCode) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email }).populate('recentSubject');
+  return User.findOne({ email }).populate('recentSubject').populate('classes');
 };
 
 /**

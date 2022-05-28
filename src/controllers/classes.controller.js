@@ -2,7 +2,7 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { classesService, userService } = require('../services');
+const { classesService, userService, subjectService } = require('../services');
 
 const createClass = catchAsync(async (req, res) => {
   const classes = await classesService.createClass(req.body);
@@ -11,6 +11,7 @@ const createClass = catchAsync(async (req, res) => {
       await userService.updateUserByUserCode(it, { classes: classes._id });
     });
   }
+  await subjectService.updateSubjectById(req.body.subject, { classes: classes._id });
   res.status(httpStatus.CREATED).send(classes);
 });
 

@@ -49,6 +49,7 @@ const updateSubject = {
       file: Joi.number(),
       topic: Joi.array(),
       bank: Joi.array(),
+      classes: Joi.array(),
     })
     .min(1),
 };
