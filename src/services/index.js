@@ -9,3 +9,4 @@ module.exports.bankService = require('./bank.service');
 module.exports.subjectgroupService = require('./subjectgroup.service');
 module.exports.questionService = require('./question.service');
 module.exports.classesService = require('./classes.service');
+module.exports.lessonService = require('./lesson.service');

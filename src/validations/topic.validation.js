@@ -35,6 +35,7 @@ const updateTopic = {
       classId: Joi.array(),
       image: Joi.string(),
       source: Joi.array(),
+      lesson: Joi.array(),
     })
     .min(1),
 };

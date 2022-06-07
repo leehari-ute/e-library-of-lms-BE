@@ -10,11 +10,7 @@ const lessonSchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    description: {
-      type: String,
-      trim: true,
-    },
-    file: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'File' }],
+    file: { type: Array },
     video: { type: String, required: true },
     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
   },

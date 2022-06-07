@@ -16,10 +16,7 @@ const topicSchema = mongoose.Schema(
       type: String,
       default: '',
     },
-    lesson: {
-      type: Array,
-      default: [],
-    },
+    lesson: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lesson' }],
     image: {
       type: String,
       default: '',

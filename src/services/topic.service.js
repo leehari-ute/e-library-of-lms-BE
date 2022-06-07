@@ -32,7 +32,7 @@ const queryTopics = async (filter, options) => {
  * @returns {Promise<Topic>}
  */
 const getTopicById = async (id) => {
-  return Topic.findById(id).populate('subjectId');
+  return Topic.findById(id).populate('subjectId').populate('lesson');
 };
 
 /**
@@ -41,7 +41,7 @@ const getTopicById = async (id) => {
  * @returns {Promise<Topic>}
  */
 const getTopicByTopicId = async (topicId) => {
-  return Topic.findOne({ topicId }).populate('subjectId');
+  return Topic.findOne({ topicId }).populate('subjectId').populate('lesson');
 };
 
 /**
@@ -55,8 +55,29 @@ const updateTopicById = async (topicId, updateBody) => {
   if (!topic) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Topic not found');
   }
+  if (updateBody.lesson) {
+    topic.lesson.push(updateBody.lesson);
+  } else {
+    Object.assign(topic, updateBody);
+  }
 
-  Object.assign(topic, updateBody);
+  await topic.save();
+  return topic;
+};
+
+/**
+ * Delete topic lesson by id
+ * @param {ObjectId} topicId
+ * @param {Object} updateBody
+ * @returns {Promise<Topic>}
+ */
+const deleteTopicLessonById = async (topicId, updateBody) => {
+  const topic = await getTopicById(topicId);
+  if (!topic) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Topic not found');
+  }
+  topic.lesson = topic.lesson.filter((item) => item !== updateBody.lesson);
+
   await topic.save();
   return topic;
 };
@@ -81,5 +102,6 @@ module.exports = {
   getTopicById,
   getTopicByTopicId,
   updateTopicById,
+  deleteTopicLessonById,
   deleteTopicById,
 };
