@@ -9,6 +9,7 @@ const createLesson = {
     file: Joi.array(),
     video: Joi.string().required(),
     classes: Joi.array(),
+    user: Joi.string().required(),
   }),
 };
 
@@ -18,6 +19,7 @@ const getLessons = {
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     subject: Joi.string(),
+    user: Joi.string(),
   }),
 };
 
@@ -40,6 +42,7 @@ const updateLesson = {
       file: Joi.array(),
       video: Joi.string(),
       classes: Joi.array(),
+      user: Joi.string(),
     })
     .min(1),
 };

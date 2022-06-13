@@ -11,7 +11,7 @@ const createLesson = catchAsync(async (req, res) => {
 });
 
 const getLessons = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['subject']);
+  const filter = pick(req.query, ['subject', 'user']);
   const options = pick(req.query, ['sortBy', 'limit', 'page']);
   const result = await lessonService.queryLessons(filter, options);
   res.send(result);

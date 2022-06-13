@@ -13,6 +13,7 @@ const lessonSchema = mongoose.Schema(
     file: { type: Array },
     video: { type: String, required: true },
     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
   },
   {
     timestamps: true,
