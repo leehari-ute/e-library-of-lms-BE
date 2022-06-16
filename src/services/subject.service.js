@@ -33,7 +33,11 @@ const querySubjects = async (filter, options) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectById = async (id) => {
-  return Subject.findById(id).populate('topic').populate('teacher').populate('bank').populate('classes');
+  return Subject.findById(id)
+    .populate({ path: 'topic', populate: { path: 'lesson' } })
+    .populate('teacher')
+    .populate('bank')
+    .populate('classes');
 };
 
 /**

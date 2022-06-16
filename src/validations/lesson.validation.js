@@ -20,6 +20,7 @@ const getLessons = {
     page: Joi.number().integer(),
     subject: Joi.string(),
     user: Joi.string(),
+    status: Joi.number(),
   }),
 };
 
@@ -43,6 +44,7 @@ const updateLesson = {
       video: Joi.string(),
       classes: Joi.array(),
       user: Joi.string(),
+      status: Joi.number(),
     })
     .min(1),
 };

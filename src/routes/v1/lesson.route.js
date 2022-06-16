@@ -91,6 +91,16 @@ module.exports = router;
  *           type: string
  *         description: subjectId
  *       - in: query
+ *         name: status
+ *         schema:
+ *           type: number
+ *         description: status
+ *       - in: query
+ *         name: user
+ *         schema:
+ *           type: string
+ *         description: user Id
+ *       - in: query
  *         name: sortBy
  *         schema:
  *           type: string

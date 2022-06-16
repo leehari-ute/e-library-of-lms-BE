@@ -32,7 +32,9 @@ const queryTopics = async (filter, options) => {
  * @returns {Promise<Topic>}
  */
 const getTopicById = async (id) => {
-  return Topic.findById(id).populate('subjectId').populate('lesson');
+  return Topic.findById(id)
+    .populate({ path: 'subjectId', populate: { path: 'teacher' } })
+    .populate('lesson');
 };
 
 /**
