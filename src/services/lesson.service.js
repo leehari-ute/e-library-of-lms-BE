@@ -56,7 +56,11 @@ const updateLessonById = async (lessonId, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'lesson not found');
   }
 
-  Object.assign(lesson, updateBody);
+  if (updateBody.file) {
+    lesson.file.push(updateBody.file);
+  } else {
+    Object.assign(lesson, updateBody);
+  }
   await lesson.save();
   return lesson;
 };

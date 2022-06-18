@@ -3,10 +3,13 @@ const { objectId } = require('./custom.validation');
 
 const createFile = {
   body: Joi.object().keys({
-    fileName: Joi.string().required(),
-    fileRole: Joi.number().required(),
-    teacher: Joi.string().required(),
+    fileName: Joi.string(),
+    url: Joi.string().required(),
+    user: Joi.string().required(),
     status: Joi.number(),
+    lesson: Joi.string(),
+    classes: Joi.array(),
+    subject: Joi.string().required(),
   }),
 };
 
@@ -16,7 +19,7 @@ const getFiles = {
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     status: Joi.number(),
-    fileName: Joi.string(),
+    user: Joi.string(),
   }),
 };
 
@@ -33,9 +36,12 @@ const updateFile = {
   body: Joi.object()
     .keys({
       fileName: Joi.string(),
-      fileRole: Joi.number(),
-      teacher: Joi.string(),
+      url: Joi.string(),
+      user: Joi.string(),
       status: Joi.number(),
+      lesson: Joi.string(),
+      classes: Joi.array(),
+      subject: Joi.string(),
     })
     .min(1),
 };

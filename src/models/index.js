@@ -8,3 +8,4 @@ module.exports.SubjectGroup = require('./subjectgroup.model');
 module.exports.Question = require('./question.model');
 module.exports.Classes = require('./classes.model');
 module.exports.Lesson = require('./lesson.model');
+module.exports.QA = require('./QA.model');

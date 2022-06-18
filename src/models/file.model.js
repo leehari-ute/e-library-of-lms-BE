@@ -5,28 +5,19 @@ const fileSchema = mongoose.Schema(
   {
     fileName: {
       type: String,
-      required: true,
-      trim: true,
     },
-    fileRole: {
-      type: Number,
-      required: true,
-    },
-    teacher: {
+    url: {
       type: String,
       required: true,
-      trim: true,
     },
+    user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    lesson: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Lesson' },
+    classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
     status: {
       type: Number,
       default: 0,
     },
-    createdAt: {
-      type: Date,
-    },
-    updatedAt: {
-      type: Date,
-    },
+    subject: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' },
   },
   {
     timestamps: true,
