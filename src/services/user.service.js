@@ -34,7 +34,10 @@ const queryUsers = async (filter, options) => {
  * @returns {Promise<User>}
  */
 const getUserById = async (id) => {
-  return User.findById(id).populate('recentSubject').populate('classes');
+  return User.findById(id)
+    .populate('recentSubject')
+    .populate({ path: 'classes', populate: { path: 'subject', populate: { path: 'teacher' } } })
+    .populate({ path: 'classes', populate: { path: 'teacher' } });
 };
 
 /**
@@ -43,7 +46,10 @@ const getUserById = async (id) => {
  * @returns {Promise<User>}
  */
 const getUserByUserCode = async (userCode) => {
-  return User.findOne({ userCode }).populate('recentSubject').populate('classes');
+  return User.findOne({ userCode })
+    .populate('recentSubject')
+    .populate({ path: 'classes', populate: { path: 'subject', populate: { path: 'teacher' } } })
+    .populate({ path: 'classes', populate: { path: 'teacher' } });
 };
 
 /**
@@ -52,7 +58,10 @@ const getUserByUserCode = async (userCode) => {
  * @returns {Promise<User>}
  */
 const getUserByEmail = async (email) => {
-  return User.findOne({ email }).populate('recentSubject').populate('classes');
+  return User.findOne({ email })
+    .populate('recentSubject')
+    .populate({ path: 'classes', populate: { path: 'subject', populate: { path: 'teacher' } } })
+    .populate({ path: 'classes', populate: { path: 'teacher' } });
 };
 
 /**
