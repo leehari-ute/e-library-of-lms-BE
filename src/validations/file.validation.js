@@ -20,6 +20,7 @@ const getFiles = {
     page: Joi.number().integer(),
     status: Joi.number(),
     user: Joi.string(),
+    subject: Joi.string(),
   }),
 };
 
@@ -42,6 +43,9 @@ const updateFile = {
       lesson: Joi.string(),
       classes: Joi.array(),
       subject: Joi.string(),
+      reasonReject: Joi.string(),
+      userReject: Joi.string(),
+      dateReject: Joi.date(),
     })
     .min(1),
 };

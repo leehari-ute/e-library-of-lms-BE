@@ -6,7 +6,6 @@ const { lessonService, topicService } = require('../services');
 
 const createLesson = catchAsync(async (req, res) => {
   const lesson = await lessonService.createLesson(req.body);
-  await topicService.updateTopicById(req.body.topic, { lesson: lesson._id });
   res.status(httpStatus.CREATED).send(lesson);
 });
 
@@ -28,6 +27,9 @@ const getLesson = catchAsync(async (req, res) => {
 
 const updateLesson = catchAsync(async (req, res) => {
   const lesson = await lessonService.updateLessonById(req.params.lessonId, req.body);
+  if (req.body.status === 1) {
+    await topicService.updateTopicById(lesson.topic, { lesson: lesson.id });
+  }
   res.send(lesson);
 });
 

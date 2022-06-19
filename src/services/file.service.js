@@ -44,12 +44,21 @@ const getFileByStatus = async (status) => {
 };
 
 /**
- * Get File by fileName
- * @param {string} fileName
+ * Get File by subject
+ * @param {string} subject
  * @returns {Promise<File>}
  */
-const getFileByFilename = async (fileName) => {
-  return File.findOne({ fileName });
+const getFileBySubject = async (subject) => {
+  return File.findOne({ subject });
+};
+
+/**
+ * Get File by user
+ * @param {string} user
+ * @returns {Promise<File>}
+ */
+const getFileByUser = async (user) => {
+  return File.findOne({ user });
 };
 
 /**
@@ -88,7 +97,8 @@ module.exports = {
   queryFiles,
   getFileById,
   getFileByStatus,
-  getFileByFilename,
+  getFileBySubject,
+  getFileByUser,
   updateFileById,
   deleteFileById,
 };

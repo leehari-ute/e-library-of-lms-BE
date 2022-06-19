@@ -6,7 +6,9 @@ const { questionService, bankService } = require('../services');
 
 const createQuestion = catchAsync(async (req, res) => {
   const question = await questionService.createQuestion(req.body);
-  await bankService.updateExamQuestionById(req.body.bank, { question: question._id });
+  if (req.body.exam) {
+    await bankService.updateExamQuestionById(req.body.bank, { question: question._id });
+  }
   res.status(httpStatus.CREATED).send(question);
 });
 

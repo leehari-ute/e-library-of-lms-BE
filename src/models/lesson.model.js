@@ -15,6 +15,9 @@ const lessonSchema = mongoose.Schema(
     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     status: { type: Number, default: 0 },
+    reasonReject: { type: String },
+    userReject: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    dateReject: { type: Date },
   },
   {
     timestamps: true,

@@ -12,7 +12,7 @@ const createQuestion = {
     subjectgroup: Joi.string().required(),
     subject: Joi.string().required(),
     user: Joi.string().required(),
-    bank: Joi.string().required(),
+    bank: Joi.string(),
   }),
 };
 

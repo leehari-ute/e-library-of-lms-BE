@@ -11,7 +11,7 @@ const createFile = catchAsync(async (req, res) => {
 });
 
 const getFiles = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['fileName', 'status']);
+  const filter = pick(req.query, ['subject', 'status', 'user']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'user, subject';
   const result = await fileService.queryFiles(filter, options);

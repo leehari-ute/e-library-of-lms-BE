@@ -45,6 +45,9 @@ const updateLesson = {
       classes: Joi.array(),
       user: Joi.string(),
       status: Joi.number(),
+      reasonReject: Joi.string(),
+      userReject: Joi.string(),
+      dateReject: Joi.date(),
     })
     .min(1),
 };
