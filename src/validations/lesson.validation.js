@@ -48,6 +48,7 @@ const updateLesson = {
       reasonReject: Joi.string(),
       userReject: Joi.string(),
       dateReject: Joi.date(),
+      QA: Joi.array(),
     })
     .min(1),
 };

@@ -36,8 +36,8 @@ const updateQA = {
       content: Joi.string(),
       lesson: Joi.string(),
       user: Joi.string(),
-      answers: Joi.string(),
-      likes: Joi.string(),
+      answers: Joi.array(),
+      likes: Joi.array(),
     })
     .min(1),
 };

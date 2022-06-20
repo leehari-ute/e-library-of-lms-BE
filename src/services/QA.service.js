@@ -64,8 +64,17 @@ const updateQAById = async (QAId, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'QA not found');
   }
 
-  Object.assign(qA, updateBody);
+  if (updateBody.likes) {
+    if (qA.likes.includes(updateBody.likes[0])) {
+      qA.likes = qA.likes.filter((value) => value !== updateBody.likes[0]);
+    } else {
+      qA.likes.push(updateBody.likes[0]);
+    }
+  } else {
+    Object.assign(qA, updateBody);
+  }
   await qA.save();
+
   return qA;
 };
 

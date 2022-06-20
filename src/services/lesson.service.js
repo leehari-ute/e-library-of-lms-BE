@@ -32,7 +32,7 @@ const queryLessons = async (filter, options) => {
  * @returns {Promise<Lesson>}
  */
 const getLessonById = async (id) => {
-  return Lesson.findById(id).populate('topic');
+  return Lesson.findById(id).populate('topic').populate({ path: 'QA', populate: 'user' });
 };
 
 /**
@@ -41,7 +41,7 @@ const getLessonById = async (id) => {
  * @returns {Promise<Lesson>}
  */
 const getLessonBylessonId = async (lessonId) => {
-  return Lesson.findOne({ lessonId }).populate('topic');
+  return Lesson.findOne({ lessonId }).populate('topic').populate({ path: 'QA', populate: 'user' });
 };
 
 /**
@@ -58,6 +58,8 @@ const updateLessonById = async (lessonId, updateBody) => {
 
   if (updateBody.file) {
     lesson.file.push(updateBody.file);
+  } else if (updateBody.QA) {
+    lesson.QA.push(updateBody.QA);
   } else {
     Object.assign(lesson, updateBody);
   }
