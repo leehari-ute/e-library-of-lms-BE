@@ -3,19 +3,35 @@ const { toJSON, paginate } = require('./plugins');
 
 const notiSchema = mongoose.Schema(
   {
-    user: {
+    from: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
+      require: true,
+    },
+    to: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+      },
+    ],
+    classes: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Classes',
+    },
+    topic: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Subject',
     },
     type: {
       type: Number,
       default: 0,
     },
-    createdAt: {
-      type: Date,
+    content: {
+      type: String,
+      require: true,
     },
-    updatedAt: {
-      type: Date,
+    title: {
+      type: String,
     },
   },
   {

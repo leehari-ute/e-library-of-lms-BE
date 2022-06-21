@@ -59,6 +59,8 @@ const updateTopicById = async (topicId, updateBody) => {
   }
   if (updateBody.lesson) {
     topic.lesson.push(updateBody.lesson);
+  } else if (updateBody.noti) {
+    topic.lesson.push(updateBody.noti);
   } else {
     Object.assign(topic, updateBody);
   }

@@ -7,6 +7,7 @@ const bankRoute = require('./bank.route');
 const topicRoute = require('./topic.route');
 const lessonRoute = require('./lesson.route');
 const QARoute = require('./QA.route');
+const notiRoute = require('./noti.route');
 const questionRoute = require('./question.route');
 const subjectgroupRoute = require('./subjectgroup.route');
 const classesRoute = require('./classes.route');
@@ -64,6 +65,10 @@ const defaultRoutes = [
   {
     path: '/QAs',
     route: QARoute,
+  },
+  {
+    path: '/noti',
+    route: notiRoute,
   },
 ];
 

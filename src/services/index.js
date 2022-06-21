@@ -11,3 +11,4 @@ module.exports.questionService = require('./question.service');
 module.exports.classesService = require('./classes.service');
 module.exports.lessonService = require('./lesson.service');
 module.exports.QAService = require('./QA.service');
+module.exports.notiService = require('./noti.service');

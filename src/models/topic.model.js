@@ -33,10 +33,7 @@ const topicSchema = mongoose.Schema(
       type: Array,
       default: [],
     },
-    noti: {
-      type: Array,
-      default: [],
-    },
+    noti: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Noti' }],
   },
   {
     timestamps: true,

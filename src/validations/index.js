@@ -9,3 +9,4 @@ module.exports.questionValidation = require('./question.validation');
 module.exports.classesValidation = require('./classes.validation');
 module.exports.lessonValidation = require('./lesson.validation');
 module.exports.QAValidation = require('./QA.validation');
+module.exports.NotiValidation = require('./noti.validation');
