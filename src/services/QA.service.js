@@ -31,7 +31,10 @@ const queryQAs = async (filter, options) => {
  * @returns {Promise<QA>}
  */
 const getQAById = async (id) => {
-  return QA.findById(id).populate('user');
+  const qa = QA.findById(id)
+    .populate('user')
+    .populate({ path: 'answers', populate: { path: 'user' } });
+  return qa;
 };
 
 /**
@@ -63,8 +66,9 @@ const updateQAById = async (QAId, updateBody) => {
   if (!qA) {
     throw new ApiError(httpStatus.NOT_FOUND, 'QA not found');
   }
-
-  if (updateBody.likes) {
+  if (updateBody.answers) {
+    qA.answers.push(updateBody.answers[0]);
+  } else if (updateBody.likes) {
     if (qA.likes.includes(updateBody.likes[0])) {
       qA.likes = qA.likes.filter((value) => value !== updateBody.likes[0]);
     } else {

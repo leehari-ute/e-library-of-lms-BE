@@ -14,10 +14,12 @@ const QASchema = mongoose.Schema(
       required: true,
       trim: true,
     },
-    answers: {
-      type: Array,
-      required: true,
-    },
+    answers: [
+      {
+        user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+        content: { type: String },
+      },
+    ],
     likes: {
       type: Array,
       required: true,
