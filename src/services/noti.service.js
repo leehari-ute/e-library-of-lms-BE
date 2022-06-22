@@ -8,6 +8,9 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Noti>}
  */
 const createNoti = async (notiBody) => {
+  const re = /&lt;/gi;
+  // eslint-disable-next-line no-param-reassign
+  notiBody.content = notiBody.content.replace(re, '<');
   return Noti.create(notiBody);
 };
 

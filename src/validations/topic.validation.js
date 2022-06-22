@@ -36,6 +36,7 @@ const updateTopic = {
       image: Joi.string(),
       source: Joi.array(),
       lesson: Joi.array(),
+      noti: Joi.array(),
     })
     .min(1),
 };

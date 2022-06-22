@@ -34,7 +34,8 @@ const queryTopics = async (filter, options) => {
 const getTopicById = async (id) => {
   return Topic.findById(id)
     .populate({ path: 'subjectId', populate: { path: 'teacher' } })
-    .populate('lesson');
+    .populate('lesson')
+    .populate({ path: 'noti', populate: 'from' });
 };
 
 /**
@@ -60,7 +61,7 @@ const updateTopicById = async (topicId, updateBody) => {
   if (updateBody.lesson) {
     topic.lesson.push(updateBody.lesson);
   } else if (updateBody.noti) {
-    topic.lesson.push(updateBody.noti);
+    topic.noti.push(updateBody.noti);
   } else {
     Object.assign(topic, updateBody);
   }

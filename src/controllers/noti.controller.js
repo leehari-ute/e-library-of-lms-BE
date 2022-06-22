@@ -6,7 +6,7 @@ const { notiService, topicService } = require('../services');
 
 const createNoti = catchAsync(async (req, res) => {
   const noties = await notiService.createNoti(req.body);
-  await topicService.updateTopicById(req.body.topic, { noties: noties._id });
+  await topicService.updateTopicById(req.body.topic, { noti: noties._id });
   res.status(httpStatus.CREATED).send(noties);
 });
 
