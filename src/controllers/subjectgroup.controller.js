@@ -10,7 +10,7 @@ const createSubjectgroup = catchAsync(async (req, res) => {
 });
 
 const getSubjectgroups = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['fileName', 'status']);
+  const filter = pick(req.query, ['subject']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'subject, bank';
   const result = await subjectgroupService.querySubjectGroups(filter, options);

@@ -16,7 +16,7 @@ router
   .get(auth('getSubjects'), validate(subjectgroupValidation.getSubjectGroups), subjectgroupController.getSubjectgroups);
 
 router
-  .route('/:subjectId')
+  .route('/:subjectgroupId')
   .get(auth('getSubjects'), validate(subjectgroupValidation.getSubjectGroup), subjectgroupController.getSubjectgroup)
   .patch(
     auth('manageSubjects'),
