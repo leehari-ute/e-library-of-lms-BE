@@ -5,12 +5,13 @@ const createExam = {
   body: Joi.object().keys({
     fileType: Joi.number().required(),
     examName: Joi.string().required(),
-    examType: Joi.number().required(),
     subject: Joi.string().required(),
     time: Joi.number().required(),
     user: Joi.string().required(),
     status: Joi.number(),
     question: Joi.string(),
+    questions: Joi.array(),
+    subjectGroup: Joi.string().required(),
   }),
 };
 
@@ -40,12 +41,13 @@ const updateExam = {
     .keys({
       fileType: Joi.number(),
       examName: Joi.string(),
-      examType: Joi.number(),
       subject: Joi.string(),
       time: Joi.number(),
       user: Joi.string(),
       status: Joi.number(),
       question: Joi.string(),
+      questions: Joi.object(),
+      subjectGroup: Joi.string(),
     })
     .min(1),
 };

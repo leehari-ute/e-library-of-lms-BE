@@ -8,6 +8,9 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Question>}
  */
 const createQuestion = async (questionBody) => {
+  const re = /&lt;/gi;
+  // eslint-disable-next-line no-param-reassign
+  questionBody.quesName = questionBody.quesName.replace(re, '<');
   return Question.create(questionBody);
 };
 

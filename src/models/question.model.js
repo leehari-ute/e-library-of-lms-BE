@@ -23,6 +23,9 @@ const questionSchema = mongoose.Schema(
       type: Array,
       required: true,
     },
+    correctEssay: {
+      type: String,
+    },
     level: {
       type: Number,
       default: 0,

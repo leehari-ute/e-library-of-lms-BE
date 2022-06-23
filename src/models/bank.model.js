@@ -32,10 +32,17 @@ const bankSchema = mongoose.Schema(
         ref: 'Question',
       },
     ],
-    examType: {
-      type: Number,
-      required: true,
-    },
+    questions: [
+      {
+        quesName: String,
+        answers: Array,
+        correct: Array,
+        level: Number,
+        quesType: Number,
+        examType: Number,
+        correctEssay: String,
+      },
+    ],
     time: {
       type: Number,
       required: true,
@@ -44,12 +51,6 @@ const bankSchema = mongoose.Schema(
     status: {
       type: Number,
       default: 0,
-    },
-    createdAt: {
-      type: Date,
-    },
-    updatedAt: {
-      type: Date,
     },
   },
   {
