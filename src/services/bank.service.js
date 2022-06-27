@@ -8,12 +8,6 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Bank>}
  */
 const createExam = async (bankBody) => {
-  const re = /&lt;/gi;
-  // eslint-disable-next-line no-param-reassign
-  bankBody.questions.forEach((vl) => {
-    // eslint-disable-next-line no-param-reassign
-    vl.quesName = vl.quesName.replace(re, '<');
-  });
   return Bank.create(bankBody);
 };
 
