@@ -31,7 +31,7 @@ const questionSchema = mongoose.Schema(
       default: 0,
     },
     quesType: { type: Number, required: true },
-    subGroup: { type: mongoose.Schema.Types.ObjectId, ref: 'SubjectGroup' },
+    subjectgroup: { type: mongoose.Schema.Types.ObjectId, ref: 'SubjectGroup' },
     subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     bank: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bank' }],
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
