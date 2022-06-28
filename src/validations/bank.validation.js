@@ -48,6 +48,7 @@ const updateExam = {
       question: Joi.string(),
       questions: Joi.object(),
       subjectGroup: Joi.string(),
+      releaseTime: Joi.date(),
     })
     .min(1),
 };

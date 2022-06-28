@@ -7,7 +7,6 @@ const { subjectService } = require('../services');
 
 const createExam = catchAsync(async (req, res) => {
   const exam = await bankService.createExam(req.body);
-  await subjectService.updateSubjectBankById(req.body.subject, { bank: exam._id });
   res.status(httpStatus.CREATED).send(exam);
 });
 
@@ -29,6 +28,9 @@ const getExam = catchAsync(async (req, res) => {
 
 const updateExam = catchAsync(async (req, res) => {
   const exam = await bankService.updateExamById(req.params.examId, req.body);
+  if (req.body.status === 1) {
+    await subjectService.updateSubjectBankById(exam.subject, { bank: exam.id });
+  }
   res.send(exam);
 });
 

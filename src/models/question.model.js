@@ -17,7 +17,6 @@ const questionSchema = mongoose.Schema(
     },
     answers: {
       type: Array,
-      required: true,
     },
     correct: {
       type: Array,
@@ -30,7 +29,8 @@ const questionSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
-    quesType: { type: Number, required: true },
+    quesType: { type: Number },
+    examType: { type: Number, required: true },
     subjectgroup: { type: mongoose.Schema.Types.ObjectId, ref: 'SubjectGroup' },
     subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     bank: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bank' }],

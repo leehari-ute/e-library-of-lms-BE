@@ -5,8 +5,8 @@ const createQuestion = {
   body: Joi.object().keys({
     quesCode: Joi.string(),
     quesName: Joi.string().required(),
-    quesType: Joi.number().required(),
-    answers: Joi.array().required(),
+    quesType: Joi.number(),
+    answers: Joi.array(),
     examType: Joi.number().required(),
     correct: Joi.array().required(),
     correctEssay: Joi.string(),

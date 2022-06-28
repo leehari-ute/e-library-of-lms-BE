@@ -52,6 +52,9 @@ const bankSchema = mongoose.Schema(
       type: Number,
       default: 0,
     },
+    releaseTime: {
+      type: Date,
+    },
   },
   {
     timestamps: true,
