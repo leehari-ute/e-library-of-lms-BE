@@ -43,6 +43,17 @@ const bankSchema = mongoose.Schema(
         correctEssay: String,
       },
     ],
+    submissions: [
+      {
+        quesName: String,
+        answers: Array,
+        correct: Array,
+        level: Number,
+        quesType: Number,
+        examType: Number,
+        correctEssay: String,
+      },
+    ],
     time: {
       type: Number,
       required: true,
