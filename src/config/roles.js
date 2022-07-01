@@ -1,5 +1,5 @@
 const allRoles = {
-  student: ['getSubjects', 'getTopics', 'getClasses', 'manageQAs', 'getQAs', 'getNoti', 'getBanks'],
+  student: ['getSubjects', 'getTopics', 'getClasses', 'manageQAs', 'getQAs', 'getNoti', 'getBanks', 'manageBanks'],
   teacher: [
     'getSubjects',
     'manageSubjects',

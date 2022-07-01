@@ -81,8 +81,11 @@ const updateExamById = async (examId, updateBody) => {
   if (!exam) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Exam not found');
   }
-
-  Object.assign(exam, updateBody);
+  if (updateBody.submissions) {
+    exam.submissions.push(updateBody.submissions);
+  } else {
+    Object.assign(exam, updateBody);
+  }
   await exam.save();
   return exam;
 };
