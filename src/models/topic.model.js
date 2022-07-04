@@ -4,35 +4,23 @@ const { toJSON, paginate } = require('./plugins');
 const topicSchema = mongoose.Schema(
   {
     subjectId: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
-    classId: {
-      type: Array,
-      default: [],
-    },
+
     title: {
       type: String,
       require: true,
     },
-    description: {
-      type: String,
-      default: '',
-    },
+
     lesson: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Lesson' }],
     image: {
       type: String,
       default: '',
     },
-    source: {
-      type: Array,
-      default: [],
-    },
+
     content: {
       type: String,
       default: '',
     },
-    QA: {
-      type: Array,
-      default: [],
-    },
+
     noti: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Notification' }],
   },
   {
