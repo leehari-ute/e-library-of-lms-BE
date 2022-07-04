@@ -19,7 +19,7 @@ const fileSchema = mongoose.Schema(
     },
     subject: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' },
     reasonReject: { type: String },
-    userReject: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+    userReject: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     dateReject: { type: Date },
   },
   {

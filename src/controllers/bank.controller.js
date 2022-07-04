@@ -36,7 +36,7 @@ const updateExam = catchAsync(async (req, res) => {
 
 const deleteExam = catchAsync(async (req, res) => {
   const exam = await bankService.deleteExamById(req.params.examId);
-  await subjectService.deleteSubjectBankById(req.body.subjectId, { bank: exam._id });
+  await subjectService.deleteSubjectBankById(exam.subject, { bank: exam._id });
   res.status(httpStatus.NO_CONTENT).send(exam);
 });
 
