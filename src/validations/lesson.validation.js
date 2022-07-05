@@ -6,8 +6,12 @@ const createLesson = {
     subject: Joi.string().required(),
     topic: Joi.string().required(),
     title: Joi.string().required(),
+    content: Joi.string(),
+
     file: Joi.array(),
-    video: Joi.string().required(),
+    video: Joi.string(),
+    url: Joi.string(),
+
     classes: Joi.array(),
     user: Joi.string().required(),
   }),
