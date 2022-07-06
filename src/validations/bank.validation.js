@@ -4,6 +4,7 @@ const { objectId } = require('./custom.validation');
 const createExam = {
   body: Joi.object().keys({
     fileType: Joi.number().required(),
+    isFinal: Joi.boolean(),
     examName: Joi.string().required(),
     subject: Joi.string().required(),
     time: Joi.number().required(),
@@ -49,6 +50,7 @@ const updateExam = {
       questions: Joi.object(),
       subjectGroup: Joi.string(),
       releaseTime: Joi.date(),
+      isFinal: Joi.boolean(),
       submissions: Joi.any(),
     })
     .min(1),

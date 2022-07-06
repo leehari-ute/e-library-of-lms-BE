@@ -48,6 +48,7 @@ const bankSchema = mongoose.Schema(
         user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
         submit: [{ id: String, ans: Array || String, correct: Array || String }],
         score: Number,
+        correctNum: Number,
       },
     ],
     time: {
@@ -57,10 +58,14 @@ const bankSchema = mongoose.Schema(
     },
     status: {
       type: Number,
-      default: 0,
+      default: 1,
     },
     releaseTime: {
       type: Date,
+    },
+    isFinal: {
+      type: Boolean,
+      default: false,
     },
   },
   {

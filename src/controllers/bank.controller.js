@@ -7,6 +7,9 @@ const { subjectService } = require('../services');
 
 const createExam = catchAsync(async (req, res) => {
   const exam = await bankService.createExam(req.body);
+  if (req.body.isFinal === false) {
+    await subjectService.updateSubjectBankById(req.body.subject, { bank: exam._id });
+  }
   res.status(httpStatus.CREATED).send(exam);
 });
 
@@ -14,6 +17,7 @@ const getExams = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['user', 'status', 'subject', 'subjectGroup']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'subject, user, question';
+  options.sortBy = 'createdAt:desc';
   const result = await bankService.queryExams(filter, options);
   res.send(result);
 });

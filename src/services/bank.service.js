@@ -31,7 +31,11 @@ const queryExams = async (filter, options) => {
  * @returns {Promise<Bank>}
  */
 const getExamById = async (id) => {
-  return Bank.findById(id).populate('user').populate('subject').populate('question');
+  return Bank.findById(id)
+    .populate('user')
+    .populate('subject')
+    .populate('question')
+    .populate({ path: 'submissions', populate: { path: 'user' } });
 };
 
 /**

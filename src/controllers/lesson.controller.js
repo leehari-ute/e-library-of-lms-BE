@@ -6,6 +6,7 @@ const { lessonService, topicService } = require('../services');
 
 const createLesson = catchAsync(async (req, res) => {
   const lesson = await lessonService.createLesson(req.body);
+  await topicService.updateTopicById(req.body.topic, { lesson: lesson._id });
   res.status(httpStatus.CREATED).send(lesson);
 });
 
@@ -13,6 +14,8 @@ const getLessons = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['subject', 'user', 'status']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'subject, user';
+  options.sortBy = 'createdAt:desc';
+
   const result = await lessonService.queryLessons(filter, options);
   res.send(result);
 });
@@ -27,15 +30,12 @@ const getLesson = catchAsync(async (req, res) => {
 
 const updateLesson = catchAsync(async (req, res) => {
   const lesson = await lessonService.updateLessonById(req.params.lessonId, req.body);
-  if (req.body.status === 1) {
-    await topicService.updateTopicById(lesson.topic, { lesson: lesson.id });
-  }
   res.send(lesson);
 });
 
 const deleteLesson = catchAsync(async (req, res) => {
   const lesson = await lessonService.deleteLessonById(req.params.lessonId);
-  await topicService.deleteTopicLessonById(req.body.topic, { lesson: lesson._id });
+  await topicService.deleteTopicLessonById(lesson.topic, { lesson: lesson._id });
   res.status(httpStatus.NO_CONTENT).send(lesson);
 });
 

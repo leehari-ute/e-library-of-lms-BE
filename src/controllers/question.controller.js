@@ -16,6 +16,8 @@ const getQuestions = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['subject', 'subjectgroup', 'level']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'user';
+  options.sortBy = 'createdAt:desc';
+
   const result = await questionService.queryQuestions(filter, options);
   res.send(result);
 });

@@ -19,6 +19,8 @@ const getClasses = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['teacher', 'subject']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'teacher, subject';
+  options.sortBy = 'createdAt:desc';
+
   const result = await classesService.queryClasses(filter, options);
   res.send(result);
 });

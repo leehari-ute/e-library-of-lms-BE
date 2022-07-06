@@ -6,7 +6,7 @@ const { fileService, lessonService } = require('../services');
 
 const createFile = catchAsync(async (req, res) => {
   const file = await fileService.createFile(req.body);
-
+  await lessonService.updateLessonById(req.body.lesson, { file: file.url });
   res.status(httpStatus.CREATED).send(file);
 });
 
@@ -14,6 +14,8 @@ const getFiles = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['subject', 'status', 'user']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'user, subject';
+  options.sortBy = 'createdAt:desc';
+
   const result = await fileService.queryFiles(filter, options);
   res.send(result);
 });
@@ -28,9 +30,6 @@ const getFile = catchAsync(async (req, res) => {
 
 const updateFile = catchAsync(async (req, res) => {
   const file = await fileService.updateFileById(req.params.fileId, req.body);
-  if (req.body.status === 1) {
-    await lessonService.updateLessonById(file.lesson, { file: file.url });
-  }
 
   res.send(file);
 });
