@@ -25,6 +25,8 @@ const QASchema = mongoose.Schema(
       required: true,
     },
     lesson: { type: mongoose.Schema.Types.ObjectId, ref: 'Lesson' },
+    subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
+
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   },
   {

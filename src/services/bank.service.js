@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const lodash = require('lodash');
 const { Bank } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -86,7 +87,11 @@ const updateExamById = async (examId, updateBody) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Exam not found');
   }
   if (updateBody.submissions) {
-    exam.submissions.push(updateBody.submissions);
+    if (!lodash.isArray(updateBody.submissions)) {
+      exam.submissions.push(updateBody.submissions);
+    } else {
+      Object.assign(exam, updateBody);
+    }
   } else {
     Object.assign(exam, updateBody);
   }
