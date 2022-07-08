@@ -47,6 +47,15 @@ const getQAByLesson = async (lesson) => {
 };
 
 /**
+ * Get QA by subject
+ * @param {string} subject
+ * @returns {Promise<QA>}
+ */
+const getQABySubject = async (subject) => {
+  return QA.findOne({ subject }).populate('user');
+};
+
+/**
  * Get QA by user
  * @param {string} user
  * @returns {Promise<QA>}
@@ -102,6 +111,7 @@ module.exports = {
   getQAById,
   getQAByLesson,
   getQAByUser,
+  getQABySubject,
   updateQAById,
   deleteQAById,
 };

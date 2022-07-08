@@ -34,7 +34,16 @@ const queryNoties = async (filter, options) => {
  * @returns {Promise<Noti>}
  */
 const getNotiById = async (id) => {
-  return Noti.findById(id).populate('teacher').populate('subject');
+  return Noti.findById(id).populate('from').populate('subject').populate('to');
+};
+
+/**
+ * Get Noti by subject
+ * @param {string} subject
+ * @returns {Promise<Noti>}
+ */
+const getNotiBySubject = async (subject) => {
+  return Noti.findOne({ subject }).populate('from').populate('subject').populate('to');
 };
 
 /**
@@ -72,6 +81,7 @@ module.exports = {
   createNoti,
   queryNoties,
   getNotiById,
+  getNotiBySubject,
   updateNotiById,
   deleteNotiById,
 };

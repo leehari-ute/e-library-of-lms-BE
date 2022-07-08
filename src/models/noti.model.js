@@ -18,9 +18,13 @@ const notiSchema = mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Classes',
     },
-    topic: {
+    subject: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Subject',
+    },
+    topic: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Topic',
     },
     type: {
       type: Number,

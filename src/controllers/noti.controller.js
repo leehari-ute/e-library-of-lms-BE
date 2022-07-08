@@ -13,7 +13,7 @@ const createNoti = catchAsync(async (req, res) => {
 const getNoties = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['to', 'subject']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
-  options.populate = 'from, to';
+  options.populate = 'from, to, subject';
   options.sortBy = 'createdAt:desc';
 
   const result = await notiService.queryNoties(filter, options);
