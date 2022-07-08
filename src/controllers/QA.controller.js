@@ -13,7 +13,7 @@ const createQA = catchAsync(async (req, res) => {
 const getQAs = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['lesson', 'user']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
-  options.populate = 'lesson, user';
+  options.populate = 'lesson, user, subject';
 
   const result = await QAService.queryQAs(filter, options);
   res.send(result);

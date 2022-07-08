@@ -9,7 +9,7 @@ const router = express.Router();
 router
   .route('/')
   .post(auth('manageNoti'), validate(notiValidation.createNoti), notiController.createNoti)
-  .get(auth('getNoti'), validate(notiValidation.getNoti), notiController.getNoti);
+  .get(auth('getNoti'), validate(notiValidation.getNotis), notiController.getNoties);
 
 router
   .route('/:notiId')

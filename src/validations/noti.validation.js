@@ -7,6 +7,8 @@ const createNoti = {
     to: Joi.array(),
     classes: Joi.string(),
     topic: Joi.string(),
+    subject: Joi.string(),
+
     title: Joi.string(),
     content: Joi.string().required(),
   }),
@@ -17,6 +19,7 @@ const getNotis = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
+    subject: Joi.string(),
   }),
 };
 
@@ -38,6 +41,7 @@ const updateNoti = {
       topic: Joi.string(),
       content: Joi.string(),
       title: Joi.string(),
+      subject: Joi.string(),
     })
     .min(1),
 };

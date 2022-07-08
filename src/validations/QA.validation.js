@@ -6,6 +6,8 @@ const createQA = {
     title: Joi.string().required(),
     content: Joi.string().required(),
     lesson: Joi.string().required(),
+    subject: Joi.string().required(),
+
     user: Joi.string().required(),
   }),
 };
@@ -17,6 +19,7 @@ const getQAs = {
     page: Joi.number().integer(),
     lesson: Joi.string(),
     user: Joi.number(),
+    subject: Joi.string(),
   }),
 };
 
