@@ -7,7 +7,7 @@ const createQA = {
     content: Joi.string().required(),
     lesson: Joi.string().required(),
     subject: Joi.string().required(),
-
+    topic: Joi.string(),
     user: Joi.string().required(),
   }),
 };
