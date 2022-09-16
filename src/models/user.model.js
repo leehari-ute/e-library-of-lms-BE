@@ -59,7 +59,7 @@ const userSchema = mongoose.Schema(
     address: {
       type: String,
     },
-    classes: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Classes' }],
+    subjects: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' }],
   },
   {
     timestamps: true,

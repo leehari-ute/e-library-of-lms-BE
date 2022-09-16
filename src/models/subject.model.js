@@ -30,7 +30,8 @@ const subjectSchema = mongoose.Schema(
     },
     topic: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Topic' }],
     bank: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bank' }],
-    classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
+    // classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
+    student: [{ type: String, required: true }],
     description: {
       type: String,
       default: '',

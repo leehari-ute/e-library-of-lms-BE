@@ -12,6 +12,7 @@ const createSubject = {
     image: Joi.string(),
     topic: Joi.array(),
     bank: Joi.array(),
+    student: Joi.array().items(Joi.string().length(8)),
   }),
 };
 
