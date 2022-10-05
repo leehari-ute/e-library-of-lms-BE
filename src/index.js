@@ -1,14 +1,19 @@
 const mongoose = require('mongoose');
+const http = require('http');
 const app = require('./app');
 const config = require('./config/config');
 const logger = require('./config/logger');
+const Io = require('./socket');
 
+const httpServer = http.createServer(app);
 let server;
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
-  server = app.listen(config.port, () => {
+  server = httpServer.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
   });
+  const socket = new Io(httpServer, 'http://localhost:3000');
+  socket.getStatistical();
 });
 
 const exitHandler = () => {
