@@ -50,7 +50,7 @@ const updateSubject = {
       file: Joi.number(),
       topic: Joi.array(),
       bank: Joi.array(),
-      classes: Joi.array(),
+      student: Joi.array().items(Joi.string().length(8)),
     })
     .min(1),
 };

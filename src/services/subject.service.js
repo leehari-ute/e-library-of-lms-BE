@@ -8,7 +8,11 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Subject>}
  */
 const createSubject = async (subjectBody) => {
-  return Subject.create(subjectBody);
+  const subject = await Subject.create(subjectBody);
+  return Subject.findById(subject.id)
+    .populate({ path: 'topic', populate: { path: 'lesson' } })
+    .populate('teacher')
+    .populate('bank');
 };
 
 /**
@@ -36,8 +40,7 @@ const getSubjectById = async (id) => {
   return Subject.findById(id)
     .populate({ path: 'topic', populate: { path: 'lesson' } })
     .populate('teacher')
-    .populate('bank')
-    .populate('classes');
+    .populate('bank');
 };
 
 /**
@@ -46,7 +49,7 @@ const getSubjectById = async (id) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubcode = async (subCode) => {
-  return Subject.findOne({ subCode }).populate('topic').populate('teacher').populate('bank').populate('classes');
+  return Subject.findOne({ subCode }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -55,7 +58,7 @@ const getSubjectBySubcode = async (subCode) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubGroup = async (subGroup) => {
-  return Subject.findOne({ subGroup }).populate('topic').populate('teacher').populate('bank').populate('classes');
+  return Subject.findOne({ subGroup }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -64,7 +67,7 @@ const getSubjectBySubGroup = async (subGroup) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectBySubname = async (subName) => {
-  return Subject.findOne({ subName }).populate('topic').populate('teacher').populate('bank').populate('classes');
+  return Subject.findOne({ subName }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -73,7 +76,7 @@ const getSubjectBySubname = async (subName) => {
  * @returns {Promise<Subject>}
  */
 const getSubjectByTeacher = async (teacher) => {
-  return Subject.findOne({ teacher }).populate('topic').populate('teacher').populate('bank').populate('classes');
+  return Subject.findOne({ teacher }).populate('topic').populate('teacher').populate('bank');
 };
 
 /**
@@ -82,18 +85,16 @@ const getSubjectByTeacher = async (teacher) => {
  * @param {Object} updateBody
  * @returns {Promise<Subject>}
  */
-const updateSubjectById = async (subjectId, updateBody) => {
-  const subject = await getSubjectById(subjectId);
+const updateSubjectById = async (subjectId, body) => {
+  const subject = await Subject.findOneAndUpdate({ _id: subjectId }, body, {
+    new: true,
+  })
+    .populate({ path: 'topic', populate: { path: 'lesson' } })
+    .populate('teacher')
+    .populate('bank');
   if (!subject) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
-  if (updateBody.classes) {
-    subject.classes.push(updateBody.classes);
-  } else {
-    Object.assign(subject, updateBody);
-  }
-
-  await subject.save();
   return subject;
 };
 
