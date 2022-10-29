@@ -23,7 +23,7 @@ class Io {
         }
       });
       socket.on('SEND_JOIN_REQUEST', async (userid) => {
-        const alreadyInList = this.listUser.some((item) => item.id === userid);
+        const alreadyInList = this.listUser.some((item) => item.id.toString() === userid.toString() );
         if (!alreadyInList) {
           const user = await userService.getUserById(userid);
           if (user) {
