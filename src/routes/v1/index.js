@@ -10,6 +10,7 @@ const QARoute = require('./QA.route');
 const notiRoute = require('./noti.route');
 const questionRoute = require('./question.route');
 const subjectgroupRoute = require('./subjectgroup.route');
+const submissionRoute = require('./subjectgroup.route');
 // const classesRoute = require('./classes.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const docsRoute = require('./docs.route');
@@ -69,6 +70,10 @@ const defaultRoutes = [
   {
     path: '/noti',
     route: notiRoute,
+  },
+  {
+    path: '/submissions',
+    route: submissionRoute,
   },
 ];
 

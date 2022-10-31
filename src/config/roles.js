@@ -14,6 +14,8 @@ const allRoles = {
     'getQAs',
     'manageNoti',
     'getNoti',
+    'manageSubmissions',
+    'getSubmissions',
   ],
   leadership: [
     'getUsers',
@@ -32,6 +34,8 @@ const allRoles = {
     'getQAs',
     'manageNoti',
     'getNoti',
+    'manageSubmissions',
+    'getSubmissions',
   ],
   admin: [
     'getUsers',
@@ -50,6 +54,8 @@ const allRoles = {
     'getQAs',
     'manageNoti',
     'getNoti',
+    'manageSubmissions',
+    'getSubmissions',
   ],
 };
 

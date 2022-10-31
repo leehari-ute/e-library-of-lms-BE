@@ -25,6 +25,6 @@ submissionSchema.pre('save', async function (next) {
 /**
  * @typedef Submission
  */
-const Submission = mongoose.model('Topic', submissionSchema);
+const Submission = mongoose.model('Submission', submissionSchema);
 
 module.exports = Submission;
