@@ -13,7 +13,7 @@ const createSubmission = catchAsync(async (req, res) => {
 const getSubmissions = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['bank']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
-  options.populate = 'user, bank';
+  options.populate = 'user, bank, subject';
   const result = await submissionService.querySubmissions(filter, options);
   res.send(result);
 });

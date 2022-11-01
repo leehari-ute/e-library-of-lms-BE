@@ -1,5 +1,16 @@
 const allRoles = {
-  student: ['getSubjects', 'getTopics', 'getClasses', 'manageQAs', 'getQAs', 'getNoti', 'getBanks', 'manageBanks'],
+  student: [
+    'getSubjects',
+    'getTopics',
+    'getClasses',
+    'manageQAs',
+    'getQAs',
+    'getNoti',
+    'getBanks',
+    'manageBanks',
+    'manageSubmissions',
+    'getSubmissions',
+  ],
   teacher: [
     'getSubjects',
     'manageSubjects',

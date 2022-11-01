@@ -40,7 +40,7 @@ const getSubjectById = async (id) => {
   return Subject.findById(id)
     .populate({ path: 'topic', populate: { path: 'lesson' } })
     .populate('teacher')
-    .populate('bank');
+    .populate({ path: 'bank', populate: { path: 'submissions' } });
 };
 
 /**

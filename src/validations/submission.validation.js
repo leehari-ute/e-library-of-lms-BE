@@ -16,7 +16,7 @@ const getSubmissions = {
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
-    bankId: Joi.string(),
+    bank: Joi.string(),
   }),
 };
 

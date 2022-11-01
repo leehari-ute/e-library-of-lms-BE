@@ -12,7 +12,7 @@ router
   .get(auth('getSubmissions'), validate(submissionValidation.getSubmissions), submissionController.getSubmissions);
 
 router
-  .route('/:subjectgroupId')
+  .route('/:submissionId')
   .get(auth('getSubmissions'), validate(submissionValidation.getSubmission), submissionController.getSubmission)
   .patch(auth('manageSubmissions'), validate(submissionValidation.updateSubmission), submissionController.updateSubmission)
   .delete(auth('manageSubmissions'), validate(submissionValidation.deleteSubmission), submissionController.deleteSubmission);

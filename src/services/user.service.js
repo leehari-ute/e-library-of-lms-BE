@@ -36,8 +36,7 @@ const queryUsers = async (filter, options) => {
 const getUserById = async (id) => {
   return User.findById(id)
     .populate('recentSubject')
-    .populate({ path: 'classes', populate: { path: 'subject', populate: { path: 'teacher' } } })
-    .populate({ path: 'classes', populate: { path: 'teacher' } });
+    .populate({ path: 'subjects', populate: { path: 'teacher' } });
 };
 
 /**
@@ -48,8 +47,7 @@ const getUserById = async (id) => {
 const getUserByUserCode = async (userCode) => {
   return User.findOne({ userCode })
     .populate('recentSubject')
-    .populate({ path: 'classes', populate: { path: 'subject', populate: { path: 'teacher' } } })
-    .populate({ path: 'classes', populate: { path: 'teacher' } });
+    .populate({ path: 'subjects', populate: { path: 'teacher' } });
 };
 
 /**
@@ -60,8 +58,7 @@ const getUserByUserCode = async (userCode) => {
 const getUserByEmail = async (email) => {
   return User.findOne({ email })
     .populate('recentSubject')
-    .populate({ path: 'classes', populate: { path: 'subject', populate: { path: 'teacher' } } })
-    .populate({ path: 'classes', populate: { path: 'teacher' } });
+    .populate({ path: 'subjects', populate: { path: 'teacher' } });
 };
 
 /**
@@ -115,8 +112,8 @@ const updateUserByUserCode = async (userCode, updateBody) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
-  if (updateBody.classes) {
-    user.classes.push(updateBody.classes);
+  if (updateBody.subjects) {
+    user.subjects.push(updateBody.subjects);
   } else {
     Object.assign(user, updateBody);
   }

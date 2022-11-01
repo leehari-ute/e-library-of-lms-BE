@@ -31,7 +31,9 @@ const querySubmissions = async (filter, options) => {
  * @returns {Promise<Submission>}
  */
 const getSubmissionById = async (id) => {
-  return Submission.findById(id).populate('user').populate('bank');
+  return Submission.findById(id)
+    .populate('user')
+    .populate({ path: 'bank', populate: { path: 'subject' } });
 };
 
 /**
