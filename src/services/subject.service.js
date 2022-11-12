@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
-const { Subject } = require('../models');
+const lodash = require('lodash');
+const { Subject, User } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -86,6 +87,7 @@ const getSubjectByTeacher = async (teacher) => {
  * @returns {Promise<Subject>}
  */
 const updateSubjectById = async (subjectId, body) => {
+  const oldSubject = await getSubjectById(subjectId);
   const subject = await Subject.findOneAndUpdate({ _id: subjectId }, body, {
     new: true,
   })
@@ -95,6 +97,35 @@ const updateSubjectById = async (subjectId, body) => {
   if (!subject) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
+  const newStudentList = subject.student;
+  const oldStudentList = oldSubject.student;
+  /**
+   * @description  remove subject form removed user
+   */
+  const removedStudentList = oldStudentList.filter((e) => !newStudentList.includes(e));
+  removedStudentList.forEach(async (userCode) => {
+    const user = await User.findOne({ userCode });
+    if (user) {
+      const listSubjects = lodash.cloneDeep(user.subjects);
+      lodash.remove(listSubjects, (n) => {
+        return n.toString() === subject.id.toString();
+      });
+      user.subjects = lodash.cloneDeep(listSubjects);
+      await user.save();
+    }
+  });
+  /**
+   * @description  add subject to new user
+   */
+  const addedStudentList = newStudentList.filter((e) => !oldStudentList.includes(e));
+  addedStudentList.forEach(async (userCode) => {
+    const user = await User.findOne({ userCode });
+    if (user) {
+      user.subjects.push(subject.id);
+      await user.save();
+    }
+  });
+
   return subject;
 };
 
