@@ -45,10 +45,8 @@ const bankSchema = mongoose.Schema(
     ],
     submissions: [
       {
-        user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-        submit: [{ id: String, ans: Array || String, correct: Array || String }],
-        score: Number,
-        correctNum: Number,
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Submission',
       },
     ],
     time: {

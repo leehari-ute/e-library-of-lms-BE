@@ -116,6 +116,22 @@ const updateExamQuestionById = async (examId, updateBody) => {
 };
 
 /**
+ * Update exam submission by id
+ * @param {ObjectId} examId
+ * @param {Object} updateBody
+ * @returns {Promise<Bank>}
+ */
+const updateExamSubmissionById = async (examId, updateBody) => {
+  const exam = await getExamById(examId);
+  if (!exam) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'exam not found');
+  }
+  exam.submissions.push(updateBody.submissions);
+  await exam.save();
+  return exam;
+};
+
+/**
  * Delete subejct by id
  * @param {ObjectId} examId
  * @returns {Promise<Bank>}
@@ -138,6 +154,7 @@ module.exports = {
   getExamByUser,
   updateExamById,
   updateExamQuestionById,
+  updateExamSubmissionById,
   getExamBySubjectGroup,
   deleteExamById,
 };

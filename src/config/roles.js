@@ -1,5 +1,16 @@
 const allRoles = {
-  student: ['getSubjects', 'getTopics', 'getClasses', 'manageQAs', 'getQAs', 'getNoti', 'getBanks', 'manageBanks'],
+  student: [
+    'getSubjects',
+    'getTopics',
+    'getClasses',
+    'manageQAs',
+    'getQAs',
+    'getNoti',
+    'getBanks',
+    'manageBanks',
+    'manageSubmissions',
+    'getSubmissions',
+  ],
   teacher: [
     'getSubjects',
     'manageSubjects',
@@ -14,6 +25,8 @@ const allRoles = {
     'getQAs',
     'manageNoti',
     'getNoti',
+    'manageSubmissions',
+    'getSubmissions',
   ],
   leadership: [
     'getUsers',
@@ -32,6 +45,8 @@ const allRoles = {
     'getQAs',
     'manageNoti',
     'getNoti',
+    'manageSubmissions',
+    'getSubmissions',
   ],
   admin: [
     'getUsers',
@@ -50,6 +65,8 @@ const allRoles = {
     'getQAs',
     'manageNoti',
     'getNoti',
+    'manageSubmissions',
+    'getSubmissions',
   ],
 };
 
