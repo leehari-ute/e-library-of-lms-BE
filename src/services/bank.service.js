@@ -25,7 +25,7 @@ const createExamWithQuestion = async (body) => {
     {
       value: 2,
       label: 'difficult',
-      list: await Question.find({ level: 0, subject: body.subject }),
+      list: await Question.find({ level: 2, subject: body.subject }),
     },
     {
       value: 1,
@@ -35,7 +35,7 @@ const createExamWithQuestion = async (body) => {
     {
       value: 0,
       label: 'easy',
-      list: await Question.find({ level: 2, subject: body.subject }),
+      list: await Question.find({ level: 0, subject: body.subject }),
     },
   ];
   const listQuestion = [];
@@ -46,7 +46,7 @@ const createExamWithQuestion = async (body) => {
       let ques = {};
       do {
         ques = curLev.list[Math.floor(Math.random() * curLev.list.length)];
-      } while (list.find((item) => item.id === ques.id));
+      } while (list.find((item) => item === ques.id) && list.length < curLev.list.length);
       if (ques.id) {
         list.push(ques.id);
       }
