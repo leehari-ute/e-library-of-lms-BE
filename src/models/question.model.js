@@ -28,6 +28,12 @@ const questionSchema = mongoose.Schema(
     level: {
       type: Number,
       default: 0,
+      /**
+       * @description:
+       * 0 = easy
+       * 1 = medium
+       * 2 = difficult
+       */
     },
     quesType: { type: Number },
     examType: { type: Number, required: true },

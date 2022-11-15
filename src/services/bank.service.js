@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const lodash = require('lodash');
-const { Bank } = require('../models');
+const { Bank, Question } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -10,6 +10,54 @@ const ApiError = require('../utils/ApiError');
  */
 const createExam = async (bankBody) => {
   return Bank.create(bankBody);
+};
+
+/**
+ * Create a bank with exist question
+ * @param {Object} body
+ * @returns {Promise<Bank>}
+ */
+const createExamWithQuestion = async (body) => {
+  body.difficultLevel = parseInt(body.difficultLevel);
+  body.mediumLevel = parseInt(body.mediumLevel);
+  body.easyLevel = parseInt(body.easyLevel);
+  const levels = [
+    {
+      value: 2,
+      label: 'difficult',
+      list: await Question.find({ level: 0, subject: body.subject }),
+    },
+    {
+      value: 1,
+      label: 'medium',
+      list: await Question.find({ level: 1, subject: body.subject }),
+    },
+    {
+      value: 0,
+      label: 'easy',
+      list: await Question.find({ level: 2, subject: body.subject }),
+    },
+  ];
+  const listQuestion = [];
+  for (const element of levels) {
+    const curLev = element;
+    const list = [];
+    for (let i = 0; i < body[`${curLev.label}Level`]; i++) {
+      let ques = {};
+      do {
+        ques = curLev.list[Math.floor(Math.random() * curLev.list.length)];
+      } while (list.find((item) => item.id === ques.id));
+      if (ques.id) {
+        list.push(ques.id);
+      }
+    }
+    listQuestion.push(...list);
+  }
+  delete body.difficultLevel;
+  delete body.mediumLevel;
+  delete body.easyLevel;
+  body.question = listQuestion;
+  return Bank.create(body);
 };
 
 /**
@@ -147,6 +195,7 @@ const deleteExamById = async (examId) => {
 
 module.exports = {
   createExam,
+  createExamWithQuestion,
   queryExams,
   getExamById,
   getExamByStatus,

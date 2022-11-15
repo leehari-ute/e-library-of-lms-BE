@@ -17,6 +17,10 @@ router
   .patch(auth('manageBanks'), validate(bankValidation.updateExam), bankController.updateExam)
   .delete(auth('manageBanks'), validate(bankValidation.deleteExam), bankController.deleteExam);
 
+router
+  .route('/create-with-questions')
+  .post(auth('manageBanks'), validate(bankValidation.createExamWithQuestion), bankController.createExamWithQuestion);
+
 module.exports = router;
 
 /**
@@ -261,4 +265,59 @@ module.exports = router;
  *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /banks/create-with-questions:
+ *   post:
+ *     summary: Create an Exam with exist questions
+ *     description: Only teacher can create other Exams.
+ *     tags: [Banks]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - fileType
+ *               - examName
+ *               - subject
+ *               - examType
+ *               - user
+ *               - time
+ *             properties:
+ *               fileType:
+ *                 type: number
+ *               examName:
+ *                 type: string
+ *               subject:
+ *                 type: string
+ *               examType:
+ *                 type: number
+ *               user:
+ *                 type: string
+ *               time:
+ *                 type: number
+ *             example:
+ *               fileType: 0
+ *               examName: Kiểm tra chủ đề 01.ppt
+ *               subject: 123465789123abc
+ *               examType: 0
+ *               user: s35zg453df1h32
+ *               time: 15
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Bank'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  */

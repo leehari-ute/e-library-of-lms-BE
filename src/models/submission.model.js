@@ -8,6 +8,7 @@ const submissionSchema = mongoose.Schema(
     score: Number,
     correctNum: Number,
     bank: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Bank' },
+    order: [{ type: Number }],
   },
   {
     timestamps: true,

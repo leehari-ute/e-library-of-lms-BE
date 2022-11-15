@@ -44,8 +44,17 @@ const deleteExam = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send(exam);
 });
 
+const createExamWithQuestion = catchAsync(async (req, res) => {
+  const exam = await bankService.createExamWithQuestion(req.body);
+  if (exam.isFinal === false) {
+    await subjectService.updateSubjectBankById(exam.subject, { bank: exam._id });
+  }
+  res.status(httpStatus.CREATED).send(exam);
+});
+
 module.exports = {
   createExam,
+  createExamWithQuestion,
   getExams,
   getExam,
   updateExam,

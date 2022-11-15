@@ -10,9 +10,22 @@ const createExam = {
     time: Joi.number().required(),
     user: Joi.string().required(),
     status: Joi.number(),
-    question: Joi.string(),
-    questions: Joi.array(),
+    questions: Joi.array().required(),
     subjectGroup: Joi.string().required(),
+  }),
+};
+
+const createExamWithQuestion = {
+  body: Joi.object().keys({
+    isFinal: Joi.boolean(),
+    examName: Joi.string().required(),
+    subject: Joi.string().required(),
+    time: Joi.number().required(),
+    user: Joi.string().required(),
+    status: Joi.number(),
+    difficultLevel: Joi.string().required(),
+    mediumLevel: Joi.string().required(),
+    easyLevel: Joi.string().required(),
   }),
 };
 
@@ -67,6 +80,7 @@ const deleteExam = {
 
 module.exports = {
   createExam,
+  createExamWithQuestion,
   getExam,
   getExams,
   updateExam,

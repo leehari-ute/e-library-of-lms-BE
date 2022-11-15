@@ -5,7 +5,7 @@ const bankSchema = mongoose.Schema(
   {
     fileType: {
       type: Number,
-      required: true,
+      required: false,
     },
     examName: {
       type: String,
@@ -18,7 +18,7 @@ const bankSchema = mongoose.Schema(
     },
     subjectGroup: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true,
+      required: false,
       ref: 'SubjectGroup',
     },
     user: {
@@ -29,7 +29,7 @@ const bankSchema = mongoose.Schema(
     question: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Question',
+        ref: 'Question', // createExamWithQuestion
       },
     ],
     questions: [
