@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
-const lodash = require('lodash');
 const { Subject, User } = require('../models');
 const ApiError = require('../utils/ApiError');
+const difference = require('../utils/different');
 
 /**
  * Create a subject
@@ -10,10 +10,13 @@ const ApiError = require('../utils/ApiError');
  */
 const createSubject = async (subjectBody) => {
   const subject = await Subject.create(subjectBody);
+  await User.updateMany({ _id: subject.students }, { $push: { subjects: subject._id } });
   return Subject.findById(subject.id)
     .populate({ path: 'topic', populate: { path: 'lesson' } })
     .populate('teacher')
-    .populate('bank');
+    .populate('bank')
+    .populate('subGroup')
+    .populate('students');
 };
 
 /**
@@ -41,7 +44,8 @@ const getSubjectById = async (id) => {
   return Subject.findById(id)
     .populate({ path: 'topic', populate: { path: 'lesson' } })
     .populate('teacher')
-    .populate({ path: 'bank', populate: { path: 'submissions' } });
+    .populate({ path: 'bank', populate: { path: 'submissions' } })
+    .populate('students');
 };
 
 /**
@@ -87,46 +91,32 @@ const getSubjectByTeacher = async (teacher) => {
  * @returns {Promise<Subject>}
  */
 const updateSubjectById = async (subjectId, body) => {
-  const oldSubject = await getSubjectById(subjectId);
-  const subject = await Subject.findOneAndUpdate({ _id: subjectId }, body, {
+  const oldSubject = await Subject.findById(subjectId);
+  const newSubject = await Subject.findOneAndUpdate({ _id: subjectId }, body, {
     new: true,
   })
     .populate({ path: 'topic', populate: { path: 'lesson' } })
     .populate('teacher')
-    .populate('bank');
-  if (!subject) {
-    throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
-  }
-  const newStudentList = subject.student;
-  const oldStudentList = oldSubject.student;
-  /**
-   * @description  remove subject form removed user
-   */
-  const removedStudentList = oldStudentList.filter((e) => !newStudentList.includes(e));
-  removedStudentList.forEach(async (userCode) => {
-    const user = await User.findOne({ userCode });
-    if (user) {
-      const listSubjects = lodash.cloneDeep(user.subjects);
-      lodash.remove(listSubjects, (n) => {
-        return n.toString() === subject.id.toString();
-      });
-      user.subjects = lodash.cloneDeep(listSubjects);
-      await user.save();
-    }
-  });
-  /**
-   * @description  add subject to new user
-   */
-  const addedStudentList = newStudentList.filter((e) => !oldStudentList.includes(e));
-  addedStudentList.forEach(async (userCode) => {
-    const user = await User.findOne({ userCode });
-    if (user) {
-      user.subjects.push(subject.id);
-      await user.save();
-    }
-  });
+    .populate('bank')
+    .populate('subGroup')
+    .populate('students');
 
-  return subject;
+  const newStudentList = body.students;
+  const oldStudentList = oldSubject.students;
+
+  /**
+   * @description  remove subject form removed students && add subject to new student
+   */
+  const added = difference(newStudentList, oldStudentList);
+  if (added.length) {
+    await User.updateMany({ _id: added }, { $push: { subjects: newSubject._id } });
+  }
+  const removed = difference(oldStudentList, newStudentList);
+  if (removed.length) {
+    await User.updateMany({ _id: removed }, { $pull: { subjects: newSubject._id } });
+  }
+
+  return newSubject;
 };
 
 /**
@@ -204,6 +194,7 @@ const deleteSubjectById = async (subjectId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'Subject not found');
   }
   await subject.remove();
+  await User.updateMany({ _id: subject.students }, { $pull: { subjects: subject._id } });
   return subject;
 };
 

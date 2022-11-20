@@ -12,7 +12,7 @@ const createSubject = {
     image: Joi.string(),
     topic: Joi.array(),
     bank: Joi.array(),
-    student: Joi.array().items(Joi.string().length(8)),
+    students: Joi.array().items(Joi.string().length(24)),
   }),
 };
 
@@ -50,7 +50,7 @@ const updateSubject = {
       file: Joi.number(),
       topic: Joi.array(),
       bank: Joi.array(),
-      student: Joi.array().items(Joi.string().length(8)),
+      students: Joi.array().items(Joi.string().length(24)),
     })
     .min(1),
 };
