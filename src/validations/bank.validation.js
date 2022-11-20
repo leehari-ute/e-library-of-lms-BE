@@ -59,7 +59,6 @@ const updateExam = {
       time: Joi.number(),
       user: Joi.string(),
       status: Joi.number(),
-      question: Joi.string(),
       questions: Joi.object(),
       subjectGroup: Joi.string(),
       releaseTime: Joi.date(),

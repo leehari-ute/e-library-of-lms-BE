@@ -1,6 +1,6 @@
 const httpStatus = require('http-status');
 const lodash = require('lodash');
-const { Bank, Question } = require('../models');
+const { Bank, Question, Subject } = require('../models');
 const ApiError = require('../utils/ApiError');
 
 /**
@@ -9,7 +9,9 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Bank>}
  */
 const createExam = async (bankBody) => {
-  return Bank.create(bankBody);
+  const bank = await Bank.create(bankBody);
+  await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
+  return Bank.findById(bank.id).populate('subject').populate('user');
 };
 
 /**
@@ -57,7 +59,11 @@ const createExamWithQuestion = async (body) => {
   delete body.mediumLevel;
   delete body.easyLevel;
   body.question = listQuestion;
-  return Bank.create(body);
+  const bank = await Bank.create(body);
+  await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
+  await Question.updateMany({ _id: bank.question }, { $push: { bank: bank._id } });
+
+  return Bank.findById(bank.id).populate('subject').populate('question').populate('user');
 };
 
 /**
@@ -134,6 +140,7 @@ const updateExamById = async (examId, updateBody) => {
   if (!exam) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Exam not found');
   }
+  const oldSubject = exam.subject;
   if (updateBody.submissions) {
     if (!lodash.isArray(updateBody.submissions)) {
       exam.submissions.push(updateBody.submissions);
@@ -142,6 +149,9 @@ const updateExamById = async (examId, updateBody) => {
     }
   } else {
     Object.assign(exam, updateBody);
+  }
+  if (updateBody.subject && updateBody.subject !== oldSubject.toString()) {
+    await Subject.updateOne({ _id: bank.subject }, { $push: { bank: updateBody.subject }, $pull: { bank: oldSubject } });
   }
   await exam.save();
   return exam;
@@ -190,6 +200,7 @@ const deleteExamById = async (examId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'exam not found');
   }
   await exam.remove();
+  await Subject.updateOne({ _id: bank.subject }, { $pull: { bank: exam.subject } });
   return exam;
 };
 
