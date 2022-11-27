@@ -14,3 +14,4 @@ module.exports.QAService = require('./QA.service');
 module.exports.notiService = require('./noti.service');
 module.exports.statisticalService = require('./statistical.service');
 module.exports.submissionService = require('./submission.service');
+module.exports.paymentService = require('./payment.service');

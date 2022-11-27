@@ -12,3 +12,4 @@ module.exports.QA = require('./QA.model');
 module.exports.Noti = require('./noti.model');
 module.exports.Statistical = require('./statisticalAccess.model');
 module.exports.Submission = require('./submission.model');
+module.exports.Payment = require('./payment.model');

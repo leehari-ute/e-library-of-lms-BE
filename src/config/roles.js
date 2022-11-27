@@ -10,6 +10,8 @@ const allRoles = {
     'manageBanks',
     'manageSubmissions',
     'getSubmissions',
+    'managePayments',
+    'getPayments',
   ],
   teacher: [
     'getSubjects',
@@ -47,6 +49,8 @@ const allRoles = {
     'getNoti',
     'manageSubmissions',
     'getSubmissions',
+    'managePayments',
+    'getPayments',
   ],
   admin: [
     'getUsers',

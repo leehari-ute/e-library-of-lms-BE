@@ -11,3 +11,4 @@ module.exports.lessonController = require('./lesson.controller');
 module.exports.QAController = require('./QA.controller');
 module.exports.NotiController = require('./noti.controller');
 module.exports.SubmissionController = require('./submission.controller');
+module.exports.paymentController = require('./payment.controller');
