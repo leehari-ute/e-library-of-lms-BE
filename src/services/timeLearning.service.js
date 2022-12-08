@@ -63,9 +63,14 @@ const getTimeLearningByStudent = async (student) => {
 const updateTimeLearningByStudentAndSubject = async ({ student, subject }, body) => {
   let timeLearning = await TimeLearning.findOne({ student, subject });
   if (timeLearning) {
-    timeLearning = await TimeLearning.findOneAndUpdate({ student, subject }, body, {
-      new: true,
-    })
+    const time = timeLearning.time + body.time;
+    timeLearning = await TimeLearning.findOneAndUpdate(
+      { student, subject },
+      { time },
+      {
+        new: true,
+      }
+    )
       .populate('student')
       .populate('subject');
     return timeLearning;
