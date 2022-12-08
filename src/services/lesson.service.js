@@ -32,7 +32,7 @@ const queryLessons = async (filter, options) => {
  * @returns {Promise<Lesson>}
  */
 const getLessonById = async (id) => {
-  return Lesson.findById(id).populate('topic').populate({ path: 'QA', populate: 'user' });
+  return Lesson.findById(id).populate('topic').populate({ path: 'QA', populate: 'user' }).populate('subject');
 };
 
 /**

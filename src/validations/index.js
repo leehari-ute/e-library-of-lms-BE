@@ -12,3 +12,4 @@ module.exports.QAValidation = require('./QA.validation');
 module.exports.NotiValidation = require('./noti.validation');
 module.exports.submissionValidation = require('./submission.validation');
 module.exports.paymentValidation = require('./payment.validation');
+module.exports.timeLearningValidation = require('./timeLearning.validation');

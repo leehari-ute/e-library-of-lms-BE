@@ -12,7 +12,7 @@ const questionRoute = require('./question.route');
 const subjectgroupRoute = require('./subjectgroup.route');
 const submissionRoute = require('./submission.route');
 const paymentRoute = require('./payment.route');
-// const classesRoute = require('./classes.route');
+const timeLearningRoute = require('./timeLearning.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const docsRoute = require('./docs.route');
 const config = require('../../config/config');
@@ -79,6 +79,10 @@ const defaultRoutes = [
   {
     path: '/payments',
     route: paymentRoute,
+  },
+  {
+    path: '/time-learning',
+    route: timeLearningRoute,
   },
 ];
 
