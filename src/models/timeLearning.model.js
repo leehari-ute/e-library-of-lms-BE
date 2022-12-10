@@ -5,7 +5,13 @@ const timeLearningSchema = mongoose.Schema(
   {
     subject: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' },
     student: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
-    time: { type: Number, default: 0 }, // milliseconds
+    times: [
+      {
+        hours: Number,
+        date: String,
+      },
+    ],
+    total: Number,
   },
   {
     timestamps: true,

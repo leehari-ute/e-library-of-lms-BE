@@ -17,6 +17,13 @@ const getTimeLearnings = {
     populate: Joi.string(),
     student: Joi.string(),
     subject: Joi.string(),
+    sort: Joi.string(),
+  }),
+};
+
+const getByStudentInCurrentWeek = {
+  query: Joi.object().keys({
+    student: Joi.string().required(),
   }),
 };
 
@@ -57,6 +64,7 @@ module.exports = {
   createTimeLearning,
   getTimeLearnings,
   getTimeLearning,
+  getByStudentInCurrentWeek,
   updateTimeLearning,
   updateTimeLearningByStudentAndSubject,
   deleteTimeLearning,

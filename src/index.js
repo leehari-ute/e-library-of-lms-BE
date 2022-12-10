@@ -7,6 +7,7 @@ const Io = require('./socket');
 
 const httpServer = http.createServer(app);
 let server;
+
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
   server = httpServer.listen(config.port, () => {

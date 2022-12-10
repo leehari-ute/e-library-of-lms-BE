@@ -16,6 +16,14 @@ router
   .get(auth('getTimeLearnings'), validate(timeLearningValidation.getTimeLearnings), timeLearningController.getTimeLearnings);
 
 router
+  .route('/getByStudentInCurrentWeek')
+  .get(
+    auth('getByStudentInCurrentWeek'),
+    validate(timeLearningValidation.getByStudentInCurrentWeek),
+    timeLearningController.getByStudentInCurrentWeek
+  );
+
+router
   .route('/:timeLearningId')
   .get(auth('getTimeLearnings'), validate(timeLearningValidation.getTimeLearning), timeLearningController.getTimeLearning)
   .patch(

@@ -16,16 +16,24 @@ const createTimeLearning = catchAsync(async (req, res) => {
 
 const getTimeLearnings = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['student', 'subject']);
-  const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
+  const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate', 'sort']);
   options.populate = 'student, subject';
-  options.sortBy = 'createdAt:desc';
-
+  options.sort = options.sort ? options.sort : 'desc';
+  options.sortBy = options.sortBy ? `${options.sortBy}:${options.sort}` : 'createdAt:desc';
   const result = await timeLearningService.queryTimeLearnings(filter, options);
   res.send(result);
 });
 
 const getTimeLearning = catchAsync(async (req, res) => {
   const timeLearning = await timeLearningService.getTimeLearningById(req.params.timeLearningId);
+  if (!timeLearning) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'TimeLearning not found');
+  }
+  res.send(timeLearning);
+});
+
+const getByStudentInCurrentWeek = catchAsync(async (req, res) => {
+  const timeLearning = await timeLearningService.getByStudentInCurrentWeek(req.query.student);
   if (!timeLearning) {
     throw new ApiError(httpStatus.NOT_FOUND, 'TimeLearning not found');
   }
@@ -52,6 +60,7 @@ module.exports = {
   createTimeLearning,
   getTimeLearnings,
   getTimeLearning,
+  getByStudentInCurrentWeek,
   updateTimeLearning,
   updateTimeLearningByStudentAndSubject,
   deleteTimeLearning,

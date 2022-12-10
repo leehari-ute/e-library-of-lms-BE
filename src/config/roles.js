@@ -15,6 +15,7 @@ const allRoles = {
     'manageTimeLearning',
     'getTimeLearnings',
     'updateTimeLearningByStudentAndSubject',
+    'getByStudentInCurrentWeek',
   ],
   teacher: [
     'getSubjects',
@@ -33,6 +34,7 @@ const allRoles = {
     'manageSubmissions',
     'getSubmissions',
     'getTimeLearnings',
+    'getByStudentInCurrentWeek',
   ],
   leadership: [
     'getUsers',
@@ -56,6 +58,7 @@ const allRoles = {
     'managePayments',
     'getPayments',
     'getTimeLearnings',
+    'getByStudentInCurrentWeek',
   ],
   admin: [
     'getUsers',
@@ -77,6 +80,7 @@ const allRoles = {
     'manageSubmissions',
     'getSubmissions',
     'getTimeLearnings',
+    'getByStudentInCurrentWeek',
   ],
 };
 
