@@ -1,7 +1,11 @@
 const getDateOfCurrentWeek = () => {
   const curr = new Date(); // get current date
-  const first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week (+1 if firstday is Monday)
-
+  let first = curr.getDate() - curr.getDay() + 1; // First day is the day of the month - the day of the week (+1 if firstday is Monday)
+  if (curr.getDay() === 0) {
+    // = 0 is Sunday
+    // curr.getDay() must have value 7 if firstday is Monday
+    first = curr.getDate() - 7 + 1;
+  }
   const monday = new Date(curr.setDate(first)).toLocaleDateString();
   const tuesday = new Date(curr.setDate(first + 1)).toLocaleDateString();
   const wednesday = new Date(curr.setDate(first + 2)).toLocaleDateString();
