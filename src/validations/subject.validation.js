@@ -10,6 +10,7 @@ const createSubject = {
     file: Joi.number(),
     status: Joi.number(),
     image: Joi.string(),
+    description: Joi.string(),
     topic: Joi.array(),
     bank: Joi.array(),
     students: Joi.array().items(Joi.string().length(24)),
