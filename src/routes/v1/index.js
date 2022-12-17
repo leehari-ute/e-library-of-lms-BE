@@ -15,7 +15,7 @@ const paymentRoute = require('./payment.route');
 const timeLearningRoute = require('./timeLearning.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const docsRoute = require('./docs.route');
-const config = require('../../config/config');
+// const config = require('../../config/config');
 
 const router = express.Router();
 
@@ -99,10 +99,10 @@ defaultRoutes.forEach((route) => {
 });
 
 /* istanbul ignore next */
-if (config.env === 'development') {
-  devRoutes.forEach((route) => {
-    router.use(route.path, route.route);
-  });
-}
+// if (config.env === 'development') {
+devRoutes.forEach((route) => {
+  router.use(route.path, route.route);
+});
+// }
 
 module.exports = router;
