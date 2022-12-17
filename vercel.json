@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "name": "e-library-of-lms",
+  "builds": [
+    { "src": "app.js", "use": "@vercel/node" }
+  ],
+  "routes": [
+    { "src": "/(.*)", "dest": "/app.js" }
+  ]
+}
