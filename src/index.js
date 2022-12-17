@@ -13,7 +13,7 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   server = httpServer.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
   });
-  const socket = new Io(httpServer, 'http://localhost:3000');
+  const socket = new Io(httpServer, config.socketEndpoint);
   socket.getStatistical();
 });
 
