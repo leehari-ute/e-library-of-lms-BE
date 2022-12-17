@@ -12,10 +12,9 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   logger.info('Connected to MongoDB');
   server = httpServer.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
+    const socket = new Io(httpServer, config.socketEndpoint);
+    socket.getStatistical();
   });
-  const socket = new Io(httpServer, config.socketEndpoint);
-  socket.getStatistical();
-  console.log(socket.path);
 });
 
 const exitHandler = () => {
