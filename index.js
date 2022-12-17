@@ -15,6 +15,7 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   });
   const socket = new Io(httpServer, config.socketEndpoint);
   socket.getStatistical();
+  console.log(socket.path);
 });
 
 const exitHandler = () => {
