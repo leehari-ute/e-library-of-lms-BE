@@ -51,7 +51,7 @@ if (config.env === 'production') {
 }
 
 // v1 api routes
-app.use('/v1', routes, cors());
+app.use('/v1', routes);
 app.get('/', (req, res) => {
   res.send('hello world');
 });
