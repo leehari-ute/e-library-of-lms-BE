@@ -9,7 +9,7 @@ class Io {
       cors: {
         origin: '*',
       },
-      path: '/trans-socket',
+      transports: ['polling', 'websocket'],
     });
     this.listUser = [];
     this.getStatistical();
