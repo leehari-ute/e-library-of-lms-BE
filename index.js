@@ -1,11 +1,8 @@
 const mongoose = require('mongoose');
-const http = require('http');
-const app = require('./src/app');
+const httpServer = require('./src/app');
 const config = require('./src/config/config');
 const logger = require('./src/config/logger');
-const Io = require('./src/socket');
 
-const httpServer = http.createServer(app);
 let server;
 
 mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
@@ -13,10 +10,6 @@ mongoose.connect(config.mongoose.url, config.mongoose.options).then(() => {
   server = httpServer.listen(config.port, () => {
     logger.info(`Listening to port ${config.port}`);
   });
-  setTimeout(() => {
-    const socket = new Io(httpServer, config.socketEndpoint);
-    socket.getStatistical();
-  }, 100000);
 });
 
 const exitHandler = () => {

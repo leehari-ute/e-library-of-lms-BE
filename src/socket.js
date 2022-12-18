@@ -71,7 +71,6 @@ class Io {
         month: 0,
       });
     }
-    console.log('statistical', this.statistical);
   }
 
   async updateStatistical() {

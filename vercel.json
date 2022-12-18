@@ -8,6 +8,7 @@
      { "src": "/*", "dest": "/index.js" },
      { "src": "/v1/(.*)", "dest": "/index.js" },
      { "src": "/socket.io/(.*)", "dest": "/index.js" },
-     { "src": "/socket.io/?EIO=4&transport=polling&t=(.*)", "dest": "/index.js" }
+     { "src": "/socket.io/?EIO=4&transport=polling&t=(.*)", "dest": "/index.js" },
+     { "src": "/socket", "dest": "/index.js" }
   ]
 }
