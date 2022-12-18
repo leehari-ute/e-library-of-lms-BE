@@ -105,37 +105,36 @@ router.post('/join', async (req, res) => {
     statistical.total += 1;
     await updateStatistical(statistical);
   }
-  pusher
-    .trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
-      message: 'RECEIVED_JOIN_REQUEST mes',
-      listUser: listUser.length,
-      statistical,
-    })
-    .catch((err) => {
-      console.log('err1', err);
-    });
-  console.log('2');
-  return res.json({ success: true, message: 'RECEIVED_JOIN_REQUEST res' });
+  const re = await pusher.trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
+    message: 'RECEIVED_JOIN_REQUEST mes',
+    listUser: listUser.length,
+    statistical,
+  });
+
+  if (re.status === 200) {
+    return res.json({ success: true, message: 'RECEIVED_JOIN_REQUEST res' });
+  }
+  return res.json({ success: false });
 });
 
-router.post('/out', (req, res) => {
+router.post('/out', async (req, res) => {
   if (req.body.id) {
     const disconnectUser = listUser.findIndex((item) => item.id === req.body.id);
     if (disconnectUser > -1) {
       listUser.splice(disconnectUser, 1);
     }
   }
-  pusher
-    .trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
-      message: 'RECEIVED_OUT_REQUEST mes',
-      listUser: listUser.length,
-      statistical,
-    })
-    .catch((err) => {
-      console.log('err2', err);
-    });
+  const re = await pusher.trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
+    message: 'RECEIVED_OUT_REQUEST mes',
+    listUser: listUser.length,
+    statistical,
+  });
+
   console.log('3');
-  return res.json({ success: true, message: 'RECEIVED_OUT_REQUEST res' });
+  if (re.status === 200) {
+    return res.json({ success: true, message: 'RECEIVED_OUT_REQUEST res' });
+  }
+  return res.json({ success: false });
 });
 
 module.exports = router;
