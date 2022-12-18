@@ -58,8 +58,9 @@ app.use('/v1', routes);
 app.get('/', (req, res) => {
   res.send('hello world');
 });
+let socket;
 app.get('/socket', (req, res) => {
-  const socket = new Io(httpServer, config.socketEndpoint);
+  socket = new Io(httpServer, config.socketEndpoint);
   socket.getStatistical();
   res.send(true);
 });
