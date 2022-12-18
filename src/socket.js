@@ -7,8 +7,9 @@ class Io {
     this.path = path;
     this.io = new serverIo.Server(this.httpServer, {
       cors: {
-        origin: this.path,
+        origin: '*',
       },
+      transports: ['websocket'],
     });
     this.listUser = [];
     this.getStatistical();

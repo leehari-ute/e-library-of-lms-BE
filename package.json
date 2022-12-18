@@ -2,8 +2,7 @@
   "name": "create-nodejs-express-app",
   "version": "1.7.0",
   "description": "Create a Node.js app for building production-ready RESTful APIs using Express, by running one command",
-  "bin": "bin/createNodejsApp.js",
-  "main": "src/index.js",
+  "main": "index.js",
   "repository": "https://github.com/nguyenngocminhthu/e-library-of-lms-BE.git",
   "author": "Nguyen Ngoc Minh Thu <mistheorious@gmail.com>",
   "license": "MIT",
@@ -11,9 +10,8 @@
     "node": ">=12.0.0"
   },
   "scripts": {
-    "start": "pm2 start ecosystem.config.json --no-daemon",
-    "build": "netlify-lambda build src",
-    "dev": "cross-env NODE_ENV=development nodemon src/index.js",
+    "start": "node index.js",
+    "dev": "nodemon index.js",
     "test": "jest -i --colors --verbose --detectOpenHandles",
     "test:watch": "jest -i --watchAll",
     "coverage": "jest -i --coverage",
@@ -22,9 +20,6 @@
     "lint:fix": "eslint . --fix",
     "prettier": "prettier --check **/*.js",
     "prettier:fix": "prettier --write **/*.js",
-    "docker:prod": "docker-compose -f docker-compose.yml -f docker-compose.prod.yml up",
-    "docker:dev": "docker-compose -f docker-compose.yml -f docker-compose.dev.yml up",
-    "docker:test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "prepare": "husky install"
   },
   "keywords": [
@@ -43,7 +38,6 @@
     "es9",
     "jest",
     "travis",
-    "docker",
     "passport",
     "joi",
     "eslint",
@@ -75,6 +69,7 @@
     "passport": "^0.4.0",
     "passport-jwt": "^4.0.0",
     "pm2": "^5.1.0",
+    "pusher": "^5.1.2",
     "socket.io": "^4.5.2",
     "swagger-jsdoc": "^6.0.8",
     "swagger-ui-express": "^4.1.6",

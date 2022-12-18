@@ -15,6 +15,7 @@ const paymentRoute = require('./payment.route');
 const timeLearningRoute = require('./timeLearning.route');
 const cloudinaryRoute = require('./cloudinary.route');
 const docsRoute = require('./docs.route');
+const realtimeRoute = require('./realtime.route');
 const config = require('../../config/config');
 
 const router = express.Router();
@@ -83,6 +84,10 @@ const defaultRoutes = [
   {
     path: '/time-learning',
     route: timeLearningRoute,
+  },
+  {
+    path: '/real-time',
+    route: realtimeRoute,
   },
 ];
 
