@@ -24,6 +24,10 @@ const envVarsSchema = Joi.object()
     SMTP_PASSWORD: Joi.string().description('password for email server'),
     EMAIL_FROM: Joi.string().description('the from field in the emails sent by the app'),
     SOCKET_ENDPOINT: Joi.string().description('socket endpoint'),
+    PUSHER_APP_ID: Joi.string().description('appId'),
+    PUSHER_KEY: Joi.string().description('key'),
+    PUSHER_SECRET: Joi.string().description('secret'),
+    PUSHER_CLUSTER: Joi.string().description('cluster'),
   })
   .unknown();
 
@@ -64,4 +68,8 @@ module.exports = {
     from: envVars.EMAIL_FROM,
   },
   socketEndpoint: envVars.SOCKET_ENDPOINT,
+  appId: envVars.PUSHER_APP_ID,
+  key: envVars.PUSHER_KEY,
+  secret: envVars.PUSHER_SECRET,
+  cluster: envVars.PUSHER_CLUSTER,
 };

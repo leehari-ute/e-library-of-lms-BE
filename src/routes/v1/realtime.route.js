@@ -1,14 +1,15 @@
 const express = require('express');
 const Pusher = require('pusher');
+const config = require('../../config/config');
 const { userService, statisticalService } = require('../../services');
 
 const router = express.Router();
 
 const pusher = new Pusher({
-  appId: '1526583',
-  key: '6bd53f4e653611a72067',
-  secret: '67d59d4528d414a51e2a',
-  cluster: 'ap1',
+  appId: config.appId,
+  key: config.key,
+  secret: config.secret,
+  cluster: config.cluster,
   useTLS: true,
 });
 
