@@ -7,7 +7,7 @@ class Io {
     this.path = path;
     this.io = new serverIo.Server(this.httpServer, {
       cors: {
-        origin: this.path,
+        origin: '*',
       },
     });
     this.listUser = [];
