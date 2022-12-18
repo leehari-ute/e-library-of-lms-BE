@@ -9,6 +9,7 @@ class Io {
       cors: {
         origin: '*',
       },
+      path: '/socket.io',
     });
     this.listUser = [];
     this.getStatistical();
