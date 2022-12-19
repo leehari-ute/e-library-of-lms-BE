@@ -12,6 +12,10 @@ router
   .get(auth('getNoti'), validate(notiValidation.getNotis), notiController.getNoties);
 
 router
+  .route('/get-by-subjects')
+  .post(auth('getByMultiSubject'), validate(notiValidation.getByMultiSubject), notiController.getByMultiSubject);
+
+router
   .route('/:notiId')
   .get(auth('getNoti'), validate(notiValidation.getNoti), notiController.getNoti)
   .patch(auth('manageNoti'), validate(notiValidation.updateNoti), notiController.updateNoti)
