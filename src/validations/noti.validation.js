@@ -29,6 +29,12 @@ const getNoti = {
   }),
 };
 
+const getByMultiSubject = {
+  body: Joi.object().keys({
+    subjects: Joi.array(),
+  }),
+};
+
 const updateNoti = {
   params: Joi.object().keys({
     notiId: Joi.required().custom(objectId),
@@ -56,6 +62,7 @@ module.exports = {
   createNoti,
   getNotis,
   getNoti,
+  getByMultiSubject,
   updateNoti,
   deleteNoti,
 };
