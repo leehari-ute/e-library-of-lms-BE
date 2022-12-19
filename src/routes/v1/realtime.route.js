@@ -1,7 +1,9 @@
 const express = require('express');
 const Pusher = require('pusher');
 const config = require('../../config/config');
+const httpStatus = require('http-status');
 const { userService, statisticalService } = require('../../services');
+const logger = require('../../config/logger');
 
 const router = express.Router();
 
@@ -106,16 +108,20 @@ router.post('/join', async (req, res) => {
     statistical.total += 1;
     await updateStatistical(statistical);
   }
-  const re = await pusher.trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
-    message: 'RECEIVED_JOIN_REQUEST mes',
-    listUser: listUser.length,
-    statistical,
-  });
+  const re = await pusher
+    .trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
+      message: 'RECEIVED_JOIN_REQUEST mes',
+      listUser: listUser.length,
+      statistical,
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
 
   if (re.status === 200) {
     return res.json({ success: true, message: 'RECEIVED_JOIN_REQUEST res' });
   }
-  return res.json({ success: false });
+  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
 });
 
 router.post('/out', async (req, res) => {
@@ -125,17 +131,21 @@ router.post('/out', async (req, res) => {
       listUser.splice(disconnectUser, 1);
     }
   }
-  const re = await pusher.trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
-    message: 'RECEIVED_OUT_REQUEST mes',
-    listUser: listUser.length,
-    statistical,
-  });
+  const re = await pusher
+    .trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
+      message: 'RECEIVED_OUT_REQUEST mes',
+      listUser: listUser.length,
+      statistical,
+    })
+    .catch((err) => {
+      logger.error(err);
+    });
 
   console.log('3');
   if (re.status === 200) {
     return res.json({ success: true, message: 'RECEIVED_OUT_REQUEST res' });
   }
-  return res.json({ success: false });
+  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
 });
 
 module.exports = router;
