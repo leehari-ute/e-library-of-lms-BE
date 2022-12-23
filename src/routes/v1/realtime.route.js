@@ -1,7 +1,7 @@
 const express = require('express');
 const Pusher = require('pusher');
-const config = require('../../config/config');
 const httpStatus = require('http-status');
+const config = require('../../config/config');
 const { userService, statisticalService } = require('../../services');
 const logger = require('../../config/logger');
 
@@ -90,62 +90,67 @@ router.get('/', (req, res) => {
   pusher.trigger('my-channel', 'my-event', {
     message: 'hello world',
   });
-  console.log('1');
   return res.json({ success: true, message: 'Thank you for voting' });
 });
 
 router.post('/join', async (req, res) => {
-  const alreadyInList = listUser.some((item) => item.id.toString() === req.body.id.toString());
-  console.log('in: ', alreadyInList);
-  if (!alreadyInList) {
-    const user = await userService.getUserById(req.body.id);
-    if (user) {
-      listUser.push(user);
+  try {
+    const alreadyInList = listUser.some((item) => item.id.toString() === req.body.id.toString());
+    if (!alreadyInList) {
+      const user = await userService.getUserById(req.body.id);
+      if (user) {
+        listUser.push(user);
+      }
+      statistical.today.total += 1;
+      statistical.week += 1;
+      statistical.month += 1;
+      statistical.total += 1;
+      await updateStatistical(statistical);
     }
-    statistical.today.total += 1;
-    statistical.week += 1;
-    statistical.month += 1;
-    statistical.total += 1;
-    await updateStatistical(statistical);
-  }
-  const re = await pusher
-    .trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
-      message: 'RECEIVED_JOIN_REQUEST mes',
-      listUser: listUser.length,
-      statistical,
-    })
-    .catch((err) => {
-      logger.error(err);
-    });
+    const re = await pusher
+      .trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
+        message: 'RECEIVED_JOIN_REQUEST mes',
+        listUser: listUser.length,
+        statistical,
+      })
+      .catch((err) => {
+        logger.error(err);
+      });
 
-  if (re.status === 200) {
-    return res.json({ success: true, message: 'RECEIVED_JOIN_REQUEST res' });
+    if (re.status === 200) {
+      return res.json({ success: true, message: 'RECEIVED_JOIN_REQUEST res' });
+    }
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
+  } catch (err) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
   }
-  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
 });
 
 router.post('/out', async (req, res) => {
-  if (req.body.id) {
-    const disconnectUser = listUser.findIndex((item) => item.id === req.body.id);
-    if (disconnectUser > -1) {
-      listUser.splice(disconnectUser, 1);
+  try {
+    if (req.body.id) {
+      const disconnectUser = listUser.findIndex((item) => item.id === req.body.id);
+      if (disconnectUser > -1) {
+        listUser.splice(disconnectUser, 1);
+      }
     }
-  }
-  const re = await pusher
-    .trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
-      message: 'RECEIVED_OUT_REQUEST mes',
-      listUser: listUser.length,
-      statistical,
-    })
-    .catch((err) => {
-      logger.error(err);
-    });
+    const re = await pusher
+      .trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
+        message: 'RECEIVED_OUT_REQUEST mes',
+        listUser: listUser.length,
+        statistical,
+      })
+      .catch((err) => {
+        logger.error(err);
+      });
 
-  console.log('3');
-  if (re.status === 200) {
-    return res.json({ success: true, message: 'RECEIVED_OUT_REQUEST res' });
+    if (re.status === 200) {
+      return res.json({ success: true, message: 'RECEIVED_OUT_REQUEST res' });
+    }
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
+  } catch (err) {
+    return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
   }
-  return res.status(httpStatus.INTERNAL_SERVER_ERROR).send({ success: false });
 });
 
 module.exports = router;
