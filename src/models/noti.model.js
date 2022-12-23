@@ -14,10 +14,6 @@ const notiSchema = mongoose.Schema(
         ref: 'User',
       },
     ],
-    classes: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Classes',
-    },
     subject: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Subject',

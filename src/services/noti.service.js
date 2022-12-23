@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const mongoose = require('mongoose');
 const { Noti } = require('../models');
 const ApiError = require('../utils/ApiError');
 
@@ -47,6 +48,23 @@ const getNotiBySubject = async (subject) => {
 };
 
 /**
+ * Get Noti by multiple subject
+ * @param {array} subject
+ * @returns {Promise<Noti>}
+ */
+const getByMultiSubject = async (subjects) => {
+  const queryList = subjects.map((item) => mongoose.Types.ObjectId(item));
+  return Noti.find({
+    subject: { $in: queryList },
+  })
+    .populate('from')
+    .populate('subject')
+    .populate('from')
+    .populate('topic')
+    .populate('to');
+};
+
+/**
  * Update noti by id
  * @param {ObjectId} notiId
  * @param {Object} updateBody
@@ -82,6 +100,7 @@ module.exports = {
   queryNoties,
   getNotiById,
   getNotiBySubject,
+  getByMultiSubject,
   updateNotiById,
   deleteNotiById,
 };

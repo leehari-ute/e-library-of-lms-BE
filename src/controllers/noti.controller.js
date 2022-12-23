@@ -28,6 +28,14 @@ const getNoti = catchAsync(async (req, res) => {
   res.send(noties);
 });
 
+const getByMultiSubject = catchAsync(async (req, res) => {
+  const noties = await notiService.getByMultiSubject(req.body.subjects);
+  if (!noties) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'noti not found');
+  }
+  res.send(noties);
+});
+
 const updateNoti = catchAsync(async (req, res) => {
   const noties = await notiService.updateNotiById(req.params.notiId, req.body);
   res.send(noties);
@@ -42,6 +50,7 @@ module.exports = {
   createNoti,
   getNoties,
   getNoti,
+  getByMultiSubject,
   updateNoti,
   deleteNoti,
 };
