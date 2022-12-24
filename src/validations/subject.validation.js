@@ -10,9 +10,10 @@ const createSubject = {
     file: Joi.number(),
     status: Joi.number(),
     image: Joi.string(),
+    year: Joi.string().required(),
+    semester: Joi.number().required(),
     description: Joi.string(),
     topic: Joi.array(),
-    description: Joi.string(),
     bank: Joi.array(),
     students: Joi.array().items(Joi.string().length(24)),
   }),
@@ -28,6 +29,8 @@ const getSubjects = {
     subName: Joi.string(),
     subGroup: Joi.string(),
     teacher: Joi.string(),
+    year: Joi.string(),
+    semester: Joi.number(),
   }),
 };
 
@@ -52,6 +55,8 @@ const updateSubject = {
       file: Joi.number(),
       topic: Joi.array(),
       bank: Joi.array(),
+      year: Joi.string(),
+      semester: Joi.number(),
       description: Joi.string(),
       students: Joi.array().items(Joi.string().length(24)),
     })

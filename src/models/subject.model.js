@@ -35,6 +35,12 @@ const subjectSchema = mongoose.Schema(
       type: String,
       default: '',
     },
+    year: {
+      type: String
+    },
+    semester: {
+      type: Number //1,2,3
+    },
     createdAt: {
       type: Date,
     },

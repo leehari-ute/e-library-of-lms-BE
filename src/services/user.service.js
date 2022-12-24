@@ -35,7 +35,7 @@ const queryUsers = async (filter, options) => {
  */
 const getUserById = async (id) => {
   return User.findById(id)
-    .populate('recentSubject')
+    .populate({ path: 'recentSubject', populate: { path: 'teacher' } })
     .populate({ path: 'subjects', populate: { path: 'teacher' } });
 };
 
@@ -46,7 +46,7 @@ const getUserById = async (id) => {
  */
 const getUserByUserCode = async (userCode) => {
   return User.findOne({ userCode })
-    .populate('recentSubject')
+    .populate({ path: 'recentSubject', populate: { path: 'teacher' } })
     .populate({ path: 'subjects', populate: { path: 'teacher' } });
 };
 
@@ -57,7 +57,7 @@ const getUserByUserCode = async (userCode) => {
  */
 const getUserByEmail = async (email) => {
   return User.findOne({ email })
-    .populate('recentSubject')
+    .populate({ path: 'recentSubject', populate: { path: 'teacher' } })
     .populate({ path: 'subjects', populate: { path: 'teacher' } });
 };
 
