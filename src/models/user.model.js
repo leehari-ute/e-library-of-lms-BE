@@ -45,7 +45,7 @@ const userSchema = mongoose.Schema(
     recentSubject: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' }],
     recentSubjectId: [{ type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Subject' }],
     gender: {
-      type: Number,
+      type: Number, // 0 Male, 1 Female
     },
     avt: {
       type: String,
@@ -78,6 +78,11 @@ userSchema.plugin(paginate);
  */
 userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
   const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
+userSchema.statics.isUserCodeTaken = async function (userCode, excludeUserId) {
+  const user = await this.findOne({ userCode, _id: { $ne: excludeUserId } });
   return !!user;
 };
 

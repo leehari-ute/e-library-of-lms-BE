@@ -62,6 +62,7 @@ const allRoles = {
     'getTimeLearnings',
     'getByStudentInCurrentWeek',
     'getByMultiSubject',
+    'create-by-file',
   ],
   admin: [
     'getUsers',
