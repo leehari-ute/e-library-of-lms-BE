@@ -11,7 +11,39 @@ const createUser = async (userBody) => {
   if (await User.isEmailTaken(userBody.email)) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  if (await User.isUserCodeTaken(userBody.userCode)) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User code already taken');
+  }
   return User.create(userBody);
+};
+
+/**
+ * Create users
+ * @param {Array} listUser
+ * @returns {Promise<User>}
+ */
+const createUsers = async (listUser) => {
+  try {
+    const result = [];
+    await Promise.all(
+      listUser.map(async (item) => {
+        const role = item.userCode.slice(0, 2) === 'GV' ? 'teacher' : 'student';
+        const userBody = {
+          ...item,
+          email: `${item.userCode}@gmail.com`,
+          role,
+          password: `${item.userCode}${role}`,
+        };
+        if (!((await User.isEmailTaken(userBody.email)) || (await User.isUserCodeTaken(userBody.userCode)))) {
+          const user = await User.create(userBody);
+          result.push(user);
+        }
+      })
+    );
+    return result;
+  } catch (error) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'INTERNAL_SERVER_ERROR');
+  }
 };
 
 /**
@@ -91,6 +123,9 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.email && (await User.isEmailTaken(updateBody.email, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Email already taken');
   }
+  if (updateBody.userCode && (await User.isUserCodeTaken(updateBody.userCode, userId))) {
+    throw new ApiError(httpStatus.BAD_REQUEST, 'User code already taken');
+  }
   if (updateBody.recentSubjectId) {
     user.recentSubject = updateBody.recentSubjectId;
     Object.assign(user, updateBody);
@@ -137,6 +172,7 @@ const deleteUserById = async (userId) => {
 
 module.exports = {
   createUser,
+  createUsers,
   queryUsers,
   getUserById,
   getUserByUserCode,
