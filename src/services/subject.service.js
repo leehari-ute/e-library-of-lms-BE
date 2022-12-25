@@ -1,5 +1,6 @@
 const httpStatus = require('http-status');
-const { Subject, User } = require('../models');
+const logger = require('../config/logger');
+const { Subject, User, SubjectGroup } = require('../models');
 const ApiError = require('../utils/ApiError');
 const difference = require('../utils/different');
 
@@ -17,6 +18,50 @@ const createSubject = async (subjectBody) => {
     .populate('bank')
     .populate('subGroup')
     .populate('students');
+};
+
+/**
+ * Create a subject by file
+ * @param {Object} subjectBody
+ * @returns {Promise<Subject>}
+ */
+const createSubjectByFile = async (subjectBody) => {
+  try {
+    const body = subjectBody;
+    const subGroup = await SubjectGroup.findOne({ groupName: subjectBody.subGroup });
+    if (subGroup) {
+      body.subGroup = subGroup.id;
+    } else {
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Không tìm thấy tổ bộ môn');
+    }
+    const teacher = await User.findOne({ userCode: subjectBody.teacher });
+    if (teacher) {
+      body.teacher = teacher.id;
+    } else {
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Không tìm thấy giảng viên');
+    }
+    const students = [];
+    await Promise.all(
+      subjectBody.students.map(async (item) => {
+        const student = await User.findOne({ userCode: item });
+        if (student) {
+          students.push(student.id);
+        }
+      })
+    );
+    body.students = students;
+    const subject = await Subject.create(subjectBody);
+    await User.updateMany({ _id: subject.students }, { $push: { subjects: subject._id } });
+    return Subject.findById(subject.id)
+      .populate({ path: 'topic', populate: { path: 'lesson' } })
+      .populate('teacher')
+      .populate('bank')
+      .populate('subGroup')
+      .populate('students');
+  } catch (error) {
+    logger.error(error);
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'INTERNAL_SERVER_ERROR');
+  }
 };
 
 /**
@@ -92,7 +137,6 @@ const getSubjectByYear = async (year) => {
 const getSubjectBySemester = async (semester) => {
   return Subject.findOne({ semester }).populate('topic').populate('teacher').populate('bank');
 };
-
 
 /**
  * Get subject by teacher
@@ -219,6 +263,7 @@ const deleteSubjectById = async (subjectId) => {
 
 module.exports = {
   createSubject,
+  createSubjectByFile,
   querySubjects,
   getSubjectById,
   getSubjectBySubcode,

@@ -12,6 +12,10 @@ router
   .get(auth('getSubjects'), validate(subjectValidation.getSubjects), subjectController.getSubjects);
 
 router
+  .route('/create-by-file')
+  .post(auth('create-by-file'), validate(subjectValidation.createSubjectByFile), subjectController.createSubjectByFile);
+
+router
   .route('/:subjectId')
   .get(auth('getSubjects'), validate(subjectValidation.getSubject), subjectController.getSubject)
   .patch(auth('manageSubjects'), validate(subjectValidation.updateSubject), subjectController.updateSubject)

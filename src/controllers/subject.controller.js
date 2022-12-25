@@ -2,15 +2,16 @@ const httpStatus = require('http-status');
 const pick = require('../utils/pick');
 const ApiError = require('../utils/ApiError');
 const catchAsync = require('../utils/catchAsync');
-const { subjectService, subjectgroupService, userService } = require('../services');
+const { subjectService, subjectgroupService } = require('../services');
 
 const createSubject = catchAsync(async (req, res) => {
   const subject = await subjectService.createSubject(req.body);
-  if (req.body.student) {
-    req.body.student.forEach(async (it) => {
-      await userService.updateUserByUserCode(it, { subjects: subject._id });
-    });
-  }
+  await subjectgroupService.updateSubjectGroupSubjectById(req.body.subGroup, { subject: subject._id });
+  res.status(httpStatus.CREATED).send(subject);
+});
+
+const createSubjectByFile = catchAsync(async (req, res) => {
+  const subject = await subjectService.createSubjectByFile(req.body);
   await subjectgroupService.updateSubjectGroupSubjectById(req.body.subGroup, { subject: subject._id });
   res.status(httpStatus.CREATED).send(subject);
 });
@@ -46,6 +47,7 @@ const deleteSubject = catchAsync(async (req, res) => {
 
 module.exports = {
   createSubject,
+  createSubjectByFile,
   getSubjects,
   getSubject,
   updateSubject,
