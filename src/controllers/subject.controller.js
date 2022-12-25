@@ -16,7 +16,8 @@ const createSubject = catchAsync(async (req, res) => {
 });
 
 const getSubjects = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['subName', 'subCode', 'teacher', 'subGroup', 'year', 'semester']);
+  const filter = pick(req.query, ['subName', 'subCode', 'teacher', 'subGroup', 'year', 'semester', 'subName']);
+  filter.subName = { $regex: req.query.subName || '', $options: 'i' };
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'topic, bank, teacher, subGroup, students';
   options.sortBy = 'createdAt:desc';
