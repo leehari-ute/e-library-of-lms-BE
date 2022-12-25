@@ -19,6 +19,24 @@ const createSubject = {
   }),
 };
 
+const createSubjectByFile = {
+  body: Joi.object().keys({
+    subCode: Joi.string().required(),
+    subName: Joi.string().required(),
+    subGroup: Joi.string().required(),
+    teacher: Joi.string().required(),
+    file: Joi.number(),
+    status: Joi.number(),
+    image: Joi.string(),
+    year: Joi.string().required(),
+    semester: Joi.number().required(),
+    description: Joi.string(),
+    topic: Joi.array(),
+    bank: Joi.array(),
+    students: Joi.array().items(Joi.string().length(8)),
+  }),
+};
+
 const getSubjects = {
   query: Joi.object().keys({
     sortBy: Joi.string(),
@@ -71,6 +89,7 @@ const deleteSubject = {
 
 module.exports = {
   createSubject,
+  createSubjectByFile,
   getSubjects,
   getSubject,
   updateSubject,
