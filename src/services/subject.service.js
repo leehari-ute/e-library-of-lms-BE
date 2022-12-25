@@ -10,6 +10,10 @@ const difference = require('../utils/different');
  * @returns {Promise<Subject>}
  */
 const createSubject = async (subjectBody) => {
+  const isExist = await Subject.find({ subCode: subjectBody.subCode });
+  if (isExist) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Mã môn học đã tồn tại');
+  }
   const subject = await Subject.create(subjectBody);
   await User.updateMany({ _id: subject.students }, { $push: { subjects: subject._id } });
   return Subject.findById(subject.id)
@@ -27,6 +31,10 @@ const createSubject = async (subjectBody) => {
  */
 const createSubjectByFile = async (subjectBody) => {
   try {
+    const isExist = await Subject.find({ subCode: subjectBody.subCode });
+    if (isExist) {
+      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Mã môn học đã tồn tại');
+    }
     const body = subjectBody;
     const subGroup = await SubjectGroup.findOne({ groupName: subjectBody.subGroup });
     if (subGroup) {
@@ -60,7 +68,7 @@ const createSubjectByFile = async (subjectBody) => {
       .populate('students');
   } catch (error) {
     logger.error(error);
-    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'INTERNAL_SERVER_ERROR');
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
   }
 };
 
