@@ -17,6 +17,7 @@ const createExam = {
 
 const createExamWithQuestion = {
   body: Joi.object().keys({
+    fileType: Joi.number(),
     isFinal: Joi.boolean(),
     examName: Joi.string().required(),
     subject: Joi.string().required(),
