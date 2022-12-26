@@ -12,7 +12,6 @@ const fileSchema = mongoose.Schema(
     },
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     lesson: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'Lesson' },
-    classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
     status: {
       type: Number,
       default: 0,

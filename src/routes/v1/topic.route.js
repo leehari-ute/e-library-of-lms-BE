@@ -181,8 +181,6 @@ module.exports = router;
  *                 type: string
  *               description:
  *                 type: string
- *               classId:
- *                 type: array
  *               source:
  *                 type: array
  *               image:
@@ -191,7 +189,6 @@ module.exports = router;
  *               title: Thương mại điện tử
  *               content: Thương mại điện tử
  *               description: Hoa Hoa
- *               classId: ["123456789"]
  *               source: ["123456789"]
  *               image: ""
  *     responses:

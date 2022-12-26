@@ -57,10 +57,6 @@ const defaultRoutes = [
     path: '/questions',
     route: questionRoute,
   },
-  // {
-  //   path: '/classes',
-  //   route: classesRoute,
-  // },
   {
     path: '/lessons',
     route: lessonRoute,

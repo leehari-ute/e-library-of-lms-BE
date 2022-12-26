@@ -6,7 +6,6 @@ module.exports.topicController = require('./topic.controller');
 module.exports.bankController = require('./bank.controller');
 module.exports.subjectgroupController = require('./subjectgroup.controller');
 module.exports.questionController = require('./question.controller');
-module.exports.classesController = require('./classes.controller');
 module.exports.lessonController = require('./lesson.controller');
 module.exports.QAController = require('./QA.controller');
 module.exports.NotiController = require('./noti.controller');
