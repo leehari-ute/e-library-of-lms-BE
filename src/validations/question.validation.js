@@ -18,6 +18,24 @@ const createQuestion = {
   }),
 };
 
+const createQuestions = {
+  body: Joi.object().keys({
+    questions: Joi.array().items(
+      Joi.object().keys({
+        quesName: Joi.string().required(),
+        quesType: Joi.number(),
+        answers: Joi.array(),
+        correct: Joi.array().required(),
+        level: Joi.number(),
+        examType: Joi.number(),
+      })
+    ),
+    subjectgroup: Joi.string().required(),
+    subject: Joi.string().required(),
+    user: Joi.string().required(),
+  }),
+};
+
 const getQuestions = {
   query: Joi.object().keys({
     sortBy: Joi.string(),
@@ -65,6 +83,7 @@ const deleteQuestion = {
 
 module.exports = {
   createQuestion,
+  createQuestions,
   getQuestions,
   getQuestion,
   updateQuestion,

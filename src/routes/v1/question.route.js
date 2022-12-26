@@ -12,6 +12,10 @@ router
   .get(auth('getSubjects'), validate(questionValidation.getQuestions), questionController.getQuestions);
 
 router
+  .route('/create-by-file')
+  .post(auth('create-by-file'), validate(questionValidation.createQuestions), questionController.createQuestions);
+
+router
   .route('/:questionId')
   .get(auth('getSubjects'), validate(questionValidation.getQuestion), questionController.getQuestion)
   .patch(auth('manageSubjects'), validate(questionValidation.updateQuestion), questionController.updateQuestion)

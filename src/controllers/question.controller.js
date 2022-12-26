@@ -12,6 +12,11 @@ const createQuestion = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(question);
 });
 
+const createQuestions = catchAsync(async (req, res) => {
+  const questions = await questionService.createQuestions(req.body);
+  res.status(httpStatus.CREATED).send(questions);
+});
+
 const getQuestions = catchAsync(async (req, res) => {
   const filter = pick(req.query, ['subject', 'subjectgroup', 'level']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
@@ -42,6 +47,7 @@ const deleteQuestion = catchAsync(async (req, res) => {
 
 module.exports = {
   createQuestion,
+  createQuestions,
   getQuestions,
   getQuestion,
   updateQuestion,

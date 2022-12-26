@@ -35,8 +35,8 @@ const questionSchema = mongoose.Schema(
        * 2 = difficult
        */
     },
-    quesType: { type: Number },
-    examType: { type: Number, required: true },
+    quesType: { type: Number, default: 0 },
+    examType: { type: Number, required: true, default: 0 },
     subjectgroup: { type: mongoose.Schema.Types.ObjectId, ref: 'SubjectGroup' },
     subject: { type: mongoose.Schema.Types.ObjectId, ref: 'Subject' },
     bank: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Bank' }],
