@@ -12,7 +12,6 @@ const lessonSchema = mongoose.Schema(
     },
     file: { type: Array },
     video: { type: String },
-    url: { type: String },
     classes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Classes' }],
     user: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
     status: { type: Number, default: 0 },
@@ -20,6 +19,7 @@ const lessonSchema = mongoose.Schema(
     userReject: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
     dateReject: { type: Date },
     QA: [{ type: mongoose.Schema.Types.ObjectId, ref: 'QA' }],
+    exams: { type: Array },
   },
   {
     timestamps: true,

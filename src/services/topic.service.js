@@ -34,6 +34,7 @@ const queryTopics = async (filter, options) => {
 const getTopicById = async (id) => {
   return Topic.findById(id)
     .populate({ path: 'subjectId', populate: { path: 'teacher' } })
+    .populate({ path: 'subjectId', populate: { path: 'bank' } })
     .populate('lesson')
     .populate({ path: 'noti', populate: 'from' });
 };

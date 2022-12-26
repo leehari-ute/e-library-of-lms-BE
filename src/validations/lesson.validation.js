@@ -7,13 +7,11 @@ const createLesson = {
     topic: Joi.string().required(),
     title: Joi.string().required(),
     content: Joi.string(),
-
     file: Joi.array(),
     video: Joi.string(),
-    url: Joi.string(),
-
     classes: Joi.array(),
     user: Joi.string().required(),
+    exams: Joi.array(),
   }),
 };
 
@@ -53,6 +51,7 @@ const updateLesson = {
       userReject: Joi.string(),
       dateReject: Joi.date(),
       QA: Joi.array(),
+      exams: Joi.array(),
     })
     .min(1),
 };
