@@ -12,6 +12,36 @@ const createQuestion = async (questionBody) => {
 };
 
 /**
+ * Create Questions
+ * @param {Object} body
+ * @returns {Promise<Question[]>}
+ */
+const createQuestions = async (body) => {
+  try {
+    const result = [];
+    const extraInfo = {
+      subjectgroup: body.subjectgroup,
+      subject: body.subject,
+      user: body.user,
+    };
+    await Promise.all(
+      body.questions.map(async (item) => {
+        const data = {
+          ...item,
+          ...extraInfo,
+        };
+        let question = await Question.create(data);
+        question = await question.populate('user').execPopulate();
+        result.push(question);
+      })
+    );
+    return result;
+  } catch (error) {
+    throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'INTERNAL_SERVER_ERROR');
+  }
+};
+
+/**
  * Query for Questions
  * @param {Object} filter - Mongo filter
  * @param {Object} options - Query options
@@ -94,6 +124,7 @@ const deleteQuestionById = async (questionId) => {
 
 module.exports = {
   createQuestion,
+  createQuestions,
   queryQuestions,
   getQuestionById,
   getQuestionBySubject,
