@@ -8,7 +8,6 @@ const createFile = {
     user: Joi.string().required(),
     status: Joi.number(),
     lesson: Joi.string(),
-    classes: Joi.array(),
     subject: Joi.string().required(),
   }),
 };
@@ -41,7 +40,6 @@ const updateFile = {
       user: Joi.string(),
       status: Joi.number(),
       lesson: Joi.string(),
-      classes: Joi.array(),
       subject: Joi.string(),
       reasonReject: Joi.string(),
       userReject: Joi.string(),

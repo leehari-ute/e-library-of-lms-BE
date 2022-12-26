@@ -5,7 +5,6 @@ const createNoti = {
   body: Joi.object().keys({
     from: Joi.string().required(),
     to: Joi.array(),
-    classes: Joi.string(),
     topic: Joi.string(),
     subject: Joi.string(),
 
@@ -43,7 +42,6 @@ const updateNoti = {
     .keys({
       from: Joi.string(),
       to: Joi.array(),
-      classes: Joi.string(),
       topic: Joi.string(),
       content: Joi.string(),
       title: Joi.string(),

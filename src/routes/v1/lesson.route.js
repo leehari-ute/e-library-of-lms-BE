@@ -57,15 +57,12 @@ module.exports = router;
  *                 type: string
  *               file:
  *                 type: array
- *               classes:
- *                 type: array
  *             example:
  *               subject: 13g2sr1g3s1htd1
  *               topic: s4rgr5ds4h25d4s
  *               title: Hehe
  *               video: string
  *               file: ['string']
- *               classes: ['id']
  *     responses:
  *       "201":
  *         description: Created
@@ -203,8 +200,6 @@ module.exports = router;
  *                 type: string
  *               topic:
  *                 type: string
- *               classes:
- *                 type: array
  *               file:
  *                 type: array
  *               video:
@@ -214,7 +209,6 @@ module.exports = router;
  *             example:
  *               subject: string
  *               topic: string
- *               classes: ['id']
  *               title: string
  *               video: string
  *     responses:
