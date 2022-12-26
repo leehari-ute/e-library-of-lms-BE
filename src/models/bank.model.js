@@ -5,6 +5,7 @@ const bankSchema = mongoose.Schema(
   {
     fileType: {
       type: Number,
+      default: 0,
       required: false,
     },
     examName: {
