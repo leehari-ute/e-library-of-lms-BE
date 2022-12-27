@@ -9,8 +9,11 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Bank>}
  */
 const createExam = async (bankBody) => {
+  bankBody.status = bankBody.isFinal ? 1 : 0;
   const bank = await Bank.create(bankBody);
-  await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
+  if (!bank.isFinal) {
+    await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
+  }
   return Bank.findById(bank.id).populate('subject').populate('user');
 };
 
@@ -59,8 +62,11 @@ const createExamWithQuestion = async (body) => {
   delete body.mediumLevel;
   delete body.easyLevel;
   body.question = listQuestion;
+  body.status = body.isFinal ? 1 : 0;
   const bank = await Bank.create(body);
-  await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
+  if (!bank.isFinal) {
+    await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
+  }
   await Question.updateMany({ _id: bank.question }, { $push: { bank: bank._id } });
 
   return Bank.findById(bank.id).populate('subject').populate('question').populate('user');
@@ -151,7 +157,7 @@ const updateExamById = async (examId, updateBody) => {
     Object.assign(exam, updateBody);
   }
   if (updateBody.subject && updateBody.subject !== oldSubject.toString()) {
-    await Subject.updateOne({ _id: bank.subject }, { $push: { bank: updateBody.subject }, $pull: { bank: oldSubject } });
+    await Subject.updateOne({ _id: exam.subject }, { $push: { bank: updateBody.subject }, $pull: { bank: oldSubject } });
   }
   await exam.save();
   return exam;
@@ -200,7 +206,7 @@ const deleteExamById = async (examId) => {
     throw new ApiError(httpStatus.NOT_FOUND, 'exam not found');
   }
   await exam.remove();
-  await Subject.updateOne({ _id: bank.subject }, { $pull: { bank: exam.subject } });
+  await Subject.updateOne({ _id: exam.subject }, { $pull: { bank: exam.subject } });
   return exam;
 };
 
