@@ -12,7 +12,6 @@ const createSubject = catchAsync(async (req, res) => {
 
 const createSubjectByFile = catchAsync(async (req, res) => {
   const subject = await subjectService.createSubjectByFile(req.body);
-  await subjectgroupService.updateSubjectGroupSubjectById(req.body.subGroup, { subject: subject._id });
   res.status(httpStatus.CREATED).send(subject);
 });
 
