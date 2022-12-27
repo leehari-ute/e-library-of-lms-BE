@@ -1,4 +1,5 @@
 const httpStatus = require('http-status');
+const config = require('../config/config');
 const logger = require('../config/logger');
 const { Subject, User, SubjectGroup } = require('../models');
 const ApiError = require('../utils/ApiError');
@@ -31,41 +32,61 @@ const createSubject = async (subjectBody) => {
  */
 const createSubjectByFile = async (subjectBody) => {
   try {
-    const isExist = await Subject.find({ subCode: subjectBody.subCode });
-    if (isExist) {
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Mã môn học đã tồn tại');
-    }
-    const body = subjectBody;
-    const subGroup = await SubjectGroup.findOne({ groupName: subjectBody.subGroup });
-    if (subGroup) {
-      body.subGroup = subGroup.id;
-    } else {
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Không tìm thấy tổ bộ môn');
-    }
-    const teacher = await User.findOne({ userCode: subjectBody.teacher });
-    if (teacher) {
-      body.teacher = teacher.id;
-    } else {
-      throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, 'Không tìm thấy giảng viên');
-    }
-    const students = [];
+    const result = [];
     await Promise.all(
-      subjectBody.students.map(async (item) => {
-        const student = await User.findOne({ userCode: item });
-        if (student) {
-          students.push(student.id);
+      subjectBody.map(async (ele, index) => {
+        const isExist = await Subject.findOne({ subCode: ele.subCode });
+        if (isExist) {
+          let mes = `Mã môn học đã tồn tại: ${ele.subCode}`;
+          if (config.env === 'development') {
+            mes = `Mã môn học đã tồn tại: ${ele.subCode} & ${index}`;
+          }
+          throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, mes);
         }
+        const body = ele;
+        const subGroup = await SubjectGroup.findOne({ groupName: ele.subGroup });
+        if (subGroup) {
+          body.subGroup = subGroup.id;
+        } else {
+          let mes = `Không tìm thấy tổ bộ môn ${ele.subGroup}`;
+          if (config.env === 'development') {
+            mes = `Không tìm thấy tổ bộ môn ${ele.subGroup} & ${index}`;
+          }
+          throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, mes);
+        }
+        const teacher = await User.findOne({ userCode: ele.teacher });
+        if (teacher) {
+          body.teacher = teacher.id;
+        } else {
+          let mes = `Không tìm thấy giảng viên: ${ele.teacher}`;
+          if (config.env === 'development') {
+            mes = `Không tìm thấy giảng viên: ${ele.teacher} & ${index}`;
+          }
+          throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, mes);
+        }
+        const students = [];
+        await Promise.all(
+          ele.students.map(async (item) => {
+            const student = await User.findOne({ userCode: item });
+            if (student) {
+              students.push(student.id);
+            }
+          })
+        );
+        body.students = students;
+        const subject = await Subject.create(ele);
+        await User.updateMany({ _id: subject.students }, { $push: { subjects: subject._id } });
+        await SubjectGroup.updateOne({ _id: subject.subGroup }, { $push: { subject: subject._id } });
+        const sub = await Subject.findById(subject.id)
+          .populate({ path: 'topic', populate: { path: 'lesson' } })
+          .populate('teacher')
+          .populate('bank')
+          .populate('subGroup')
+          .populate('students');
+        result.push(sub);
       })
     );
-    body.students = students;
-    const subject = await Subject.create(subjectBody);
-    await User.updateMany({ _id: subject.students }, { $push: { subjects: subject._id } });
-    return Subject.findById(subject.id)
-      .populate({ path: 'topic', populate: { path: 'lesson' } })
-      .populate('teacher')
-      .populate('bank')
-      .populate('subGroup')
-      .populate('students');
+    return result;
   } catch (error) {
     logger.error(error);
     throw new ApiError(httpStatus.INTERNAL_SERVER_ERROR, error.message);
@@ -266,6 +287,7 @@ const deleteSubjectById = async (subjectId) => {
   }
   await subject.remove();
   await User.updateMany({ _id: subject.students }, { $pull: { subjects: subject._id } });
+  await SubjectGroup.updateOne({ _id: subject.subGroup }, { $pull: { subject: subject._id } });
   return subject;
 };
 
