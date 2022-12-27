@@ -7,9 +7,6 @@ const { subjectService } = require('../services');
 
 const createExam = catchAsync(async (req, res) => {
   const exam = await bankService.createExam(req.body);
-  if (exam.isFinal === false) {
-    await subjectService.updateSubjectBankById(exam.subject, { bank: exam._id });
-  }
   res.status(httpStatus.CREATED).send(exam);
 });
 
@@ -46,9 +43,6 @@ const deleteExam = catchAsync(async (req, res) => {
 
 const createExamWithQuestion = catchAsync(async (req, res) => {
   const exam = await bankService.createExamWithQuestion(req.body);
-  if (exam.isFinal === false) {
-    await subjectService.updateSubjectBankById(exam.subject, { bank: exam._id });
-  }
   res.status(httpStatus.CREATED).send(exam);
 });
 
