@@ -9,7 +9,7 @@ const ApiError = require('../utils/ApiError');
  * @returns {Promise<Bank>}
  */
 const createExam = async (bankBody) => {
-  bankBody.status = bankBody.isFinal ? 1 : 0;
+  bankBody.status = bankBody.isFinal ? 0 : 1;
   const bank = await Bank.create(bankBody);
   if (!bank.isFinal) {
     await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
@@ -62,7 +62,7 @@ const createExamWithQuestion = async (body) => {
   delete body.mediumLevel;
   delete body.easyLevel;
   body.question = listQuestion;
-  body.status = body.isFinal ? 1 : 0;
+  body.status = body.isFinal ? 0 : 1;
   const bank = await Bank.create(body);
   if (!bank.isFinal) {
     await Subject.updateOne({ _id: bank.subject }, { $push: { bank: bank._id } });
