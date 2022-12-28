@@ -20,7 +20,7 @@ const getSubjects = catchAsync(async (req, res) => {
   filter.subName = { $regex: req.query.subName || '', $options: 'i' };
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'topic, bank, teacher, subGroup, students';
-  options.sortBy = 'createdAt:desc';
+  options.sortBy = 'subName:asc';
 
   const result = await subjectService.querySubjects(filter, options);
   res.send(result);
