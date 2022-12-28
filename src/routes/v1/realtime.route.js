@@ -107,7 +107,7 @@ router.post('/join', async (req, res) => {
       statistical.total += 1;
       await updateStatistical(statistical);
     }
-    const re = await pusher
+    const re = pusher
       .trigger('my-channel', 'RECEIVED_JOIN_REQUEST', {
         message: 'RECEIVED_JOIN_REQUEST mes',
         listUser: listUser.length,
@@ -134,7 +134,7 @@ router.post('/out', async (req, res) => {
         listUser.splice(disconnectUser, 1);
       }
     }
-    const re = await pusher
+    const re = pusher
       .trigger('my-channel', 'RECEIVED_OUT_REQUEST', {
         message: 'RECEIVED_OUT_REQUEST mes',
         listUser: listUser.length,

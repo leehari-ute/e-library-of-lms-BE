@@ -126,6 +126,14 @@ const updateUserById = async (userId, updateBody) => {
   if (updateBody.userCode && (await User.isUserCodeTaken(updateBody.userCode, userId))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'User code already taken');
   }
+
+  if (updateBody.password && updateBody.newPassword) {
+    if (!(await user.isPasswordMatch(updateBody.password))) {
+      throw new ApiError(httpStatus.BAD_REQUEST, 'Mật khẩu cũ không chính xác');
+    }
+    updateBody.password = updateBody.newPassword;
+  }
+
   if (updateBody.recentSubjectId) {
     user.recentSubject = updateBody.recentSubjectId;
     Object.assign(user, updateBody);
