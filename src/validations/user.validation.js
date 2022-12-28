@@ -26,6 +26,7 @@ const getUsers = {
   query: Joi.object().keys({
     userName: Joi.string(),
     role: Joi.string(),
+    userCode: Joi.string(),
     sortBy: Joi.string(),
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
@@ -47,11 +48,13 @@ const updateUser = {
       email: Joi.string().email(),
       password: Joi.string().custom(password),
       userName: Joi.string(),
+      userCode: Joi.string(),
       phone: Joi.string(),
       address: Joi.string(),
       gender: Joi.number(),
       avt: Joi.string(),
       recentSubjectId: Joi.array(),
+      role: Joi.string().valid('leadership', 'student', 'teacher'),
     })
     .min(1),
 };
