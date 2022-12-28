@@ -27,12 +27,12 @@ const createUsers = async (listUser) => {
     const result = [];
     await Promise.all(
       listUser.map(async (item) => {
-        const role = item.userCode.slice(0, 2) === 'GV' ? 'teacher' : 'student';
         const userBody = {
           ...item,
-          email: `${item.userCode}@gmail.com`,
-          role,
-          password: `${item.userCode}${role}`,
+          email:
+            item.userCode.slice(0, 2) === 'GV' ? `${item.userCode}@hcmute.edu.vn` : `${item.userCode}@student.hcmute.edu.vn`,
+          role: item.userCode.slice(0, 2) === 'GV' ? 'teacher' : 'student',
+          password: `${item.userCode}spkt`,
         };
         if (!((await User.isEmailTaken(userBody.email)) || (await User.isUserCodeTaken(userBody.userCode)))) {
           const user = await User.create(userBody);
