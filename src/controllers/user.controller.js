@@ -15,7 +15,7 @@ const createUsers = catchAsync(async (req, res) => {
 });
 
 const getUsers = catchAsync(async (req, res) => {
-  const filter = pick(req.query, ['userName', 'role']);
+  const filter = pick(req.query, ['userName', 'role', 'userCode']);
   const options = pick(req.query, ['sortBy', 'limit', 'page', 'populate']);
   options.populate = 'recentSubject';
   options.sortBy = 'createdAt:desc';
