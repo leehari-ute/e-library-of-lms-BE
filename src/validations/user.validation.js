@@ -47,6 +47,7 @@ const updateUser = {
     .keys({
       email: Joi.string().email(),
       password: Joi.string().custom(password),
+      newPassword: Joi.string().custom(password),
       userName: Joi.string(),
       userCode: Joi.string(),
       phone: Joi.string(),
