@@ -17,6 +17,7 @@ const getSubmissions = {
     limit: Joi.number().integer(),
     page: Joi.number().integer(),
     bank: Joi.string(),
+    user: Joi.string(),
   }),
 };
 
