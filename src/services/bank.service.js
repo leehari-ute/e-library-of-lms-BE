@@ -51,8 +51,8 @@ const createExamWithQuestion = async (body) => {
       let ques = {};
       do {
         ques = curLev.list[Math.floor(Math.random() * curLev.list.length)];
-      } while (list.find((item) => item === ques.id) && list.length < curLev.list.length);
-      if (ques.id) {
+      } while (!ques || (list.find((item) => item === ques.id) && list.length < curLev.list.length));
+      if (ques && ques.id) {
         list.push(ques.id);
       }
     }
